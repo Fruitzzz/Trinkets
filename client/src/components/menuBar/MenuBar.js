@@ -2,14 +2,9 @@ import { React} from "react";
 import Avatar from "@material-ui/core/Avatar";
 import MobileMenu from "./MobileMenu";
 import AuthOptions from "./AuthOptions";
-import { Dropdown } from "react-materialize";
+import { Dropdown, Icon } from "react-materialize";
 import { Link } from "@material-ui/core";
-const MenuBar = () => {
-  /* const [switchLang, setLang] = useState(false);
-  const handleChange = (event) => {
-    setLang(event.target.checked);
-  };*/
-  
+const MenuBar = () => {  
   const isAuth = false;
   return (
     <nav>
@@ -18,16 +13,16 @@ const MenuBar = () => {
           Trinkets
         </span>
         <a href="!#" data-target="mobile" className="sidenav-trigger">
-          <i className="material-icons blue-grey-text">menu</i>
+          <Icon className="blue-grey-text">menu</Icon>
         </a>
         <ul className="right hide-on-med-and-down">
           <li>
             <div className="switch">
               <label className="blue-grey-text text-darken-2">
-                <i className="material-icons">brightness_4</i>
+                <Icon>brightness_4</Icon>
                 <input type="checkbox" />
                 <span className="lever"></span>
-                <i className="material-icons">brightness_5</i>
+                <Icon>brightness_5</Icon>
               </label>
             </div>
           </li>
@@ -42,15 +37,15 @@ const MenuBar = () => {
                 }
               >
                 <Link className="blue-grey-text text-darken-2">
-                  <i className="material-icons blue-grey-text text-darken-2">
+                  <Icon className="blue-grey-text text-darken-2">
                     favorite
-                  </i>
+                  </Icon>
                   Моя коллекция
                 </Link>
                 <Link className="blue-grey-text text-darken-2">
-                  <i className="material-icons blue-grey-text text-darken-2">
+                  <Icon className="blue-grey-text text-darken-2">
                     language
-                  </i>
+                  </Icon>
                   Английский
                 </Link>
               </Dropdown>
@@ -65,9 +60,9 @@ const MenuBar = () => {
               className="search"
               placeholder="Начните печатать"
             />
-            <i className="material-icons blue-grey-text text-darken-2">
+            <Icon className="blue-grey-text text-darken-2">
               search
-            </i>
+            </Icon>
           </div>
         </form>
       </div>

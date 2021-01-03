@@ -51,10 +51,11 @@
     min-width: 350px;
     max-width: 500px;
 }
-.row .offset-s4 {
-    margin-top: 30px;
-    border: dashed 1px #90a4ae;
-}
-.tag-cloud-tag {
+.tag-cloud {
+    min-width: 200px;
+    min-height: 200px;
     cursor: pointer;
+}
+.card {
+    min-width: 200px;
 }

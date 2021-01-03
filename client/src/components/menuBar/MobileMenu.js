@@ -3,6 +3,7 @@ import Avatar from "@material-ui/core/Avatar";
 import background from "../../images/UserBackground.jpg"
 import { Link } from "@material-ui/core";
 import AuthOptions from "./AuthOptions";
+import { Icon } from "react-materialize";
 const MobileMenu = ({ isAuth }) => {
   return (
     <ul className="sidenav" id="mobile">
@@ -23,13 +24,13 @@ const MobileMenu = ({ isAuth }) => {
             type="search"
             placeholder="Начните печатать.."
           />
-          <i className="material-icons blue-grey-text text-darken-2">search</i>
+          <Icon className="blue-grey-text text-darken-2">search</Icon>
         </div>
       </li>
       {isAuth && (
         <li>
           <Link>
-            <i className="material-icons">favorite</i>
+            <Icon>favorite</Icon>
             Моя коллекция
           </Link>
         </li>
@@ -40,17 +41,17 @@ const MobileMenu = ({ isAuth }) => {
       </li>
       <li>
         <div className="switch">
-          <label className="grey-text text-darken-1">
-            <i className="material-icons">brightness_4</i>
+          <label className="blue-grey-text text-darken-2">
+            <Icon>brightness_4</Icon>
             <input type="checkbox" />
             <span className="lever" />
-            <i className="material-icons">brightness_5</i>
+            <Icon>brightness_5</Icon>
           </label>
         </div>
       </li>
       <li>
         <Link>
-          <i className="material-icons">language</i>
+          <Icon>language</Icon>
           Английский
         </Link>
       </li>

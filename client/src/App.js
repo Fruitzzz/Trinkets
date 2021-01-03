@@ -6,6 +6,7 @@ import './style.css';
 import SignInModal from "./components/menuBar/SignInModal";
 import SignUpModal from "./components/menuBar/SignUpModal";
 import MainPage from "./components/mainPage/MainPage";
+import PageFooter from "./components/PageFooter";
 const  App = () => {
   useEffect(() => {
    M.AutoInit()
@@ -16,6 +17,7 @@ const  App = () => {
       <MainPage/>
       <SignInModal/>
       <SignUpModal/>
+      <PageFooter/>
     </div>
   );
 }
