@@ -1,0 +1,60 @@
+@import "~materialize-css/dist/css/materialize.min.css";
+.brand-logo {
+    font-size: large;
+    font-weight: 600;
+    cursor: default;
+}
+.nav-wrapper {
+    padding: 0 20px;
+}
+.avatar-desk  {
+    margin: 10px 0 0 20px;
+}
+.sidenav .switch {
+    margin: 0 0 0 35px;
+}
+.switch label .lever {
+    vertical-align:super;
+}
+.btn-flat {
+    font-weight: 600;
+    margin-left: 20px;
+}
+.sidenav .user-view {
+    padding: 20px 35px;
+}
+.switch label {
+    font-size: 16px;
+}
+.search-form {
+    margin-left: 200px;
+    max-width: 400px;
+}
+.nav-wrapper .search-form .input-field .search {
+    width: 290px;
+}
+.sidenav .input-field .search {
+    margin-left: 35px;
+    width: 200px;
+}
+.switch .material-icons {
+    display: inline;
+}
+.material-icons {
+    cursor: pointer;
+}
+.dropdown-content {
+    top: -50px;
+    min-width:  200px;
+}
+.modal {
+    min-width: 350px;
+    max-width: 500px;
+}
+.row .offset-s4 {
+    margin-top: 30px;
+    border: dashed 1px #90a4ae;
+}
+.tag-cloud-tag {
+    cursor: pointer;
+}
