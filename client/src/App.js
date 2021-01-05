@@ -1,25 +1,26 @@
-import {React, useEffect} from "react";
+import { React, useEffect } from "react";
 import M from "materialize-css/dist/js/materialize";
-import 'materialize-css';
-import MenuBar from  './components/menuBar/MenuBar';
-import './style.css';
-import SignInModal from "./components/menuBar/SignInModal";
-import SignUpModal from "./components/menuBar/SignUpModal";
-import MainPage from "./components/mainPage/MainPage";
-import PageFooter from "./components/PageFooter";
-const  App = () => {
+import "materialize-css";
+import MenuBar from "./components/menuBar/MenuBar";
+import "./style.css";
+import Routes from "./Routes";
+import { BrowserRouter as Router } from "react-router-dom";
+const App = () => {
   useEffect(() => {
-   M.AutoInit()
+    M.AutoInit();
   });
   return (
-    <div className="App">
-      <MenuBar/>
-      <MainPage/>
-      <SignInModal/>
-      <SignUpModal/>
-      <PageFooter/>
-    </div>
+    <Router>
+      <div className="App">
+        <MenuBar />
+        <main>
+          <div className="container">
+            <Routes />
+          </div>
+        </main>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;

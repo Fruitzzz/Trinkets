@@ -1,8 +1,8 @@
 import React from "react";
 import Avatar from "@material-ui/core/Avatar";
-import background from "../../images/UserBackground.jpg"
-import { Link } from "@material-ui/core";
-import AuthOptions from "./AuthOptions";
+import background from "../../images/UserBackground.jpg";
+import { Link } from "react-router-dom";
+import {Link as FlatButton} from "@material-ui/core";
 import { Icon } from "react-materialize";
 const MobileMenu = ({ isAuth }) => {
   return (
@@ -27,15 +27,27 @@ const MobileMenu = ({ isAuth }) => {
           <Icon className="blue-grey-text text-darken-2">search</Icon>
         </div>
       </li>
-      {isAuth && (
-        <li>
-          <Link>
-            <Icon>favorite</Icon>
+      <li>
+        {isAuth ? (
+          <Link className="blue-grey-text text-darken-2 sidenav-close" to="/profile">
+            <Icon className="blue-grey-text text-darken-2">favorite</Icon>
             Моя коллекция
           </Link>
-        </li>
-      )}
-      <AuthOptions isAuth={isAuth} />
+        ) : (
+          <Link className="blue-grey-text text-darken-2 nav-link" to="/signIn">
+            Вход
+          </Link>
+        )}
+      </li>
+      <li>
+        {isAuth ? (
+          <Link className="blue-grey-text text-darken-2 nav-link" to="/">Выход</Link>
+        ) : (
+          <Link className="blue-grey-text text-darken-2 nav-link" to="/signUp">
+            Регистрация
+          </Link>
+        )}
+      </li>
       <li>
         <div className="divider"></div>
       </li>
@@ -50,10 +62,10 @@ const MobileMenu = ({ isAuth }) => {
         </div>
       </li>
       <li>
-        <Link>
-          <Icon>language</Icon>
+        <FlatButton className="blue-grey-text text-darken-2">
+          <Icon className="blue-grey-text text-darken-2">language</Icon>
           Английский
-        </Link>
+        </FlatButton>
       </li>
     </ul>
   );

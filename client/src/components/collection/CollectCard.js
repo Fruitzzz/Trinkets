@@ -5,7 +5,7 @@ const CollectCard = () => {
   return (
       <Card
       className="col s12 m4"
-        actions={[<button key="1" className="btn-flat">Подробнее</button>]}
+        actions={[<button key="1" className="btn-flat right" style={{marginBottom: "10px"}}>Подробнее</button>]}
         closeIcon={<Icon>close</Icon>}
         header={<CardTitle image={Alc} reveal waves="light" />}
         reveal={

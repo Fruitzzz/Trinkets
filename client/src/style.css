@@ -2,23 +2,24 @@
 .brand-logo {
     font-size: large;
     font-weight: 600;
-    cursor: default;
 }
 .nav-wrapper {
     padding: 0 20px;
+}
+.nav-wrapper .switch {
+    margin-right: 10px;
 }
 .avatar-desk  {
     margin: 10px 0 0 20px;
 }
 .sidenav .switch {
-    margin: 0 0 0 35px;
+    margin: 0 0 0 30px;
 }
 .switch label .lever {
     vertical-align:super;
 }
-.btn-flat {
+.nav-link {
     font-weight: 600;
-    margin-left: 20px;
 }
 .sidenav .user-view {
     padding: 20px 35px;
@@ -47,10 +48,6 @@
     top: -50px;
     min-width:  200px;
 }
-.modal {
-    min-width: 350px;
-    max-width: 500px;
-}
 .tag-cloud {
     min-width: 200px;
     min-height: 200px;
@@ -58,4 +55,11 @@
 }
 .card {
     min-width: 200px;
+}
+.auth-form {
+    margin-top: 150px;
+    max-width: 400px;
+}
+.MuiLink-underlineHover:hover {
+    text-decoration: none !important;
 }
