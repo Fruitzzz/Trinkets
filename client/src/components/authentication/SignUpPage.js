@@ -1,23 +1,40 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { React, useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { useHttp } from "../../hooks/http.hook";
+import { useMessage } from "../../hooks/message.hook";
 const SignUpPage = () => {
+  const history = useHistory();
+  const message = useMessage();
+  const { loading, error, request, clearError } = useHttp();
   const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
-
   const changeHandler = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value });
   };
-
+  useEffect(() => {
+    message(error);
+    clearError();
+  }, [error, message, clearError]);
+  const signUpHandler = async () => {
+    try {
+      await request("/api/auth/signUp", "POST", {
+        name: form.name,
+        email: form.email,
+        password: form.password,
+      });
+      history.push("/");
+    } catch (e) {}
+  };
   const comparePasswords = () => {
     return form.password !== form.confirmPassword || form.password === "";
   };
   return (
     <div className="row auth-form">
-        <h2>Регистрация</h2>
+      <h2>Регистрация</h2>
       <div className="input-field col s12">
         <input
           value={form.name}
@@ -60,11 +77,17 @@ const SignUpPage = () => {
         <label htmlFor="sign-up-confirm">Повторить пароль</label>
       </div>
       <div className="col s12">
-        <button className="btn-flat right" disabled={comparePasswords()}>
+        <button
+          className="btn-flat right"
+          disabled={comparePasswords() || loading}
+          onClick={signUpHandler}
+        >
           <i className="material-icons right">send</i>
           Регистрация
         </button>
-        <Link to="/">Уже есть аккаунт? Войдите.</Link>
+        <Link to="/signIn" disabled={loading}>
+          Уже есть аккаунт? Войдите.
+        </Link>
       </div>
     </div>
   );

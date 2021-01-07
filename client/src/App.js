@@ -1,25 +1,31 @@
 import { React, useEffect } from "react";
-import M from "materialize-css/dist/js/materialize";
 import "materialize-css";
 import MenuBar from "./components/menuBar/MenuBar";
 import "./style.css";
 import Routes from "./Routes";
 import { BrowserRouter as Router } from "react-router-dom";
+import { useAuth } from "./hooks/auth.hook";
+import { UserContext } from "./context/user.context";
 const App = () => {
   useEffect(() => {
-    M.AutoInit();
+    window.M.AutoInit();
   });
+  const { user, signIn, logout } = useAuth();
   return (
-    <Router>
-      <div className="App">
-        <MenuBar />
-        <main>
-          <div className="container">
-            <Routes />
-          </div>
-        </main>
-      </div>
-    </Router>
+    <UserContext.Provider value={{
+      signIn, logout, user, isAuthenticated: !!user.token
+    }}>
+      <Router>
+        <div className="App">
+          <MenuBar />
+          <main>
+            <div className="container">
+              <Routes />
+            </div>
+          </main>
+        </div>
+      </Router>
+    </UserContext.Provider>
   );
 };
 

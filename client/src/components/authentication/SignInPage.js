@@ -1,12 +1,30 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { React, useState, useEffect, useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { useHttp } from "../../hooks/http.hook";
+import { useMessage } from "../../hooks/message.hook";
+import {UserContext} from "../../context/user.context";
 const SignInPage = () => {
+  const user = useContext(UserContext)
+  const message = useMessage();
+  const { loading, error, request, clearError } = useHttp();
+  const history = useHistory();
   const [form, setForm] = useState({
     name: "",
     password: "",
   });
+  useEffect(() => {
+    message(error);
+    clearError();
+  }, [error, message, clearError]);
   const changeHandler = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value });
+  };
+  const signInHandler = async () => {
+    try {
+      const data = await request("/api/auth/signIn", "POST", { ...form });
+      user.signIn(data.token, data.userId, data.userName)
+      history.push("/");
+    } catch (e) {}
   };
   return (
     <div className="row auth-form">
@@ -30,13 +48,17 @@ const SignInPage = () => {
         <label htmlFor="sign-in-password">Пароль</label>
       </div>
       <div className="col s12">
-        <Link to="/">
-          <button className="btn-flat right">
-            <i className="material-icons right">send</i>
-            Вход
-          </button>
+        <button
+          className="btn-flat right"
+          disabled={loading}
+          onClick={signInHandler}
+        >
+          <i className="material-icons right">send</i>
+          Вход
+        </button>
+        <Link to="/signUp" disabled={loading}>
+          Нет аккаунта? Зарегистрируйтесь.
         </Link>
-        <Link to="/">Нет аккаунта? Зарегистрируйтесь.</Link>
       </div>
     </div>
   );

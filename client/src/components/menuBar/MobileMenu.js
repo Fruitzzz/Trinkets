@@ -1,22 +1,26 @@
-import React from "react";
+import {React, useContext} from "react";
 import Avatar from "@material-ui/core/Avatar";
 import background from "../../images/UserBackground.jpg";
 import { Link } from "react-router-dom";
 import {Link as FlatButton} from "@material-ui/core";
 import { Icon } from "react-materialize";
-const MobileMenu = ({ isAuth }) => {
+import {UserContext} from "../../context/user.context";
+const MobileMenu = () => {
+  const {logout, user, isAuthenticated} = useContext(UserContext);
   return (
     <ul className="sidenav" id="mobile">
+      {isAuthenticated && (
       <li>
         <div className="user-view">
           <div className="background">
             <img alt="back" src={background}></img>
           </div>
-          <Avatar className=" avatar red lighten-2">A</Avatar>
-          <span className="name">Name</span>
+          <Avatar className="avatar red lighten-2">{user.name[0]}</Avatar>
+          <span className="name">{user.name}</span>
           <span>{"Количество элементов: 30"}</span>
         </div>
-      </li>
+      </li>)
+}
       <li>
         <div className="input-field">
           <input
@@ -24,26 +28,26 @@ const MobileMenu = ({ isAuth }) => {
             type="search"
             placeholder="Начните печатать.."
           />
-          <Icon className="blue-grey-text text-darken-2">search</Icon>
+          <Icon className="blue-grey-text text-darken-2 sidenav-close">search</Icon>
         </div>
       </li>
       <li>
-        {isAuth ? (
+        {isAuthenticated ? (
           <Link className="blue-grey-text text-darken-2 sidenav-close" to="/profile">
             <Icon className="blue-grey-text text-darken-2">favorite</Icon>
             Моя коллекция
           </Link>
         ) : (
-          <Link className="blue-grey-text text-darken-2 nav-link" to="/signIn">
+          <Link className="blue-grey-text text-darken-2 nav-link sidenav-close" to="/signIn">
             Вход
           </Link>
         )}
       </li>
       <li>
-        {isAuth ? (
-          <Link className="blue-grey-text text-darken-2 nav-link" to="/">Выход</Link>
+        {isAuthenticated ? (
+          <FlatButton className="blue-grey-text text-darken-2 nav-link sidenav-close" onClick={logout}>Выход</FlatButton>
         ) : (
-          <Link className="blue-grey-text text-darken-2 nav-link" to="/signUp">
+          <Link className="blue-grey-text text-darken-2 nav-link sidenav-close" to="/signUp">
             Регистрация
           </Link>
         )}

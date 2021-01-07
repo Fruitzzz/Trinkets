@@ -1,11 +1,12 @@
-import { React, useState } from "react";
+import { React, useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import MobileMenu from "./MobileMenu";
 import { Dropdown, Icon } from "react-materialize";
 import { Link } from "react-router-dom";
 import { Link as FlatButton } from "@material-ui/core";
+import {UserContext} from "../../context/user.context";
 const MenuBar = () => {
-  const [isAuth, setAuth] = useState(true);
+  const {logout, user, isAuthenticated} = useContext(UserContext);
   return (
     <nav>
       <div className="nav-wrapper white z-depth-3">
@@ -29,30 +30,25 @@ const MenuBar = () => {
             </div>
           </li>
           <li>
-            {isAuth ? (
-              <Link className="blue-grey-text text-darken-2 nav-link" to="/" onClick={() => {
-                setAuth(false);
-              }}>
+            {isAuthenticated ? (
+              <FlatButton className="blue-grey-text text-darken-2 nav-link" onClick={logout}>
                 Выход
-              </Link>
+              </FlatButton>
             ) : (
               <Link
                 className="blue-grey-text text-darken-2 nav-link"
                 to="/signIn"
-                onClick={() => {
-                  setAuth(true);
-                }}
               >
                 Вход
               </Link>
             )}
           </li>
           <li>
-            {isAuth ? (
+            {isAuthenticated ? (
               <Dropdown
                 trigger={
                   <Avatar className=" avatar avatar-desk red lighten-2">
-                    A
+                    {user.name[0]}
                   </Avatar>
                 }
               >
@@ -87,7 +83,7 @@ const MenuBar = () => {
           </div>
         </form>
       </div>
-      <MobileMenu isAuth={isAuth} />
+      <MobileMenu isAuth={isAuthenticated} />
     </nav>
   );
 };
