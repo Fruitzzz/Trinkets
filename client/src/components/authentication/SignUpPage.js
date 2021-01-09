@@ -20,6 +20,7 @@ const SignUpPage = () => {
     clearError();
   }, [error, message, clearError]);
   const signUpHandler = async () => {
+    console.log(loading)
     try {
       await request("/api/auth/signUp", "POST", {
         name: form.name,
@@ -79,13 +80,13 @@ const SignUpPage = () => {
       <div className="col s12">
         <button
           className="btn-flat right"
-          disabled={comparePasswords() || loading}
+          disabled={comparePasswords() || !loading}
           onClick={signUpHandler}
         >
           <i className="material-icons right">send</i>
           Регистрация
         </button>
-        <Link to="/signIn" disabled={loading}>
+        <Link to="/signIn">
           Уже есть аккаунт? Войдите.
         </Link>
       </div>

@@ -56,7 +56,7 @@ const SignInPage = () => {
           <i className="material-icons right">send</i>
           Вход
         </button>
-        <Link to="/signUp" disabled={loading}>
+        <Link to="/signUp">
           Нет аккаунта? Зарегистрируйтесь.
         </Link>
       </div>

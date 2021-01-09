@@ -52,7 +52,7 @@ const MenuBar = () => {
                   </Avatar>
                 }
               >
-                <Link className="blue-grey-text text-darken-2 nav-link" to="/profile">
+                <Link className="blue-grey-text text-darken-2 nav-link" to={`/profile/${user.id}`}>
                   <Icon className="blue-grey-text text-darken-2">favorite</Icon>
                   Моя коллекция
                 </Link>

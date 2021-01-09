@@ -53,9 +53,6 @@
     min-height: 200px;
     cursor: pointer;
 }
-.card {
-    min-width: 200px;
-}
 .auth-form {
     margin-top: 150px;
     max-width: 400px;
@@ -63,3 +60,13 @@
 .MuiLink-underlineHover:hover {
     text-decoration: none !important;
 }
+.progress {
+    margin-top: 250px;
+}
+.card {
+    min-width: 240px;
+}
+/*.user-cards .card {
+    max-width: 409px;
+    margin-right: 10px;
+}*/

@@ -5,21 +5,20 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const app = express();
 const server = http.createServer(app);
-const mongoUri =
-  "mongodb+srv://Fruitzz:qwerty00@cluster0.4u2qd.mongodb.net/<dbname>?retryWrites=true&w=majority";
-
+const config = require("config");
 app.use(cors());
-app.use(express.json({extended: true}))
+app.use(express.json({ extended: true }));
 app.use("/api/auth", require("./routes/auth.routes"));
+app.use("/api/content", require("./routes/content.routes"));
 const start = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || mongoUri, {
+    await mongoose.connect(process.env.MONGODB_URI || config.get("mongoUri"), {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
       useFindAndModify: false,
     });
-    server.listen(process.env.PORT || 5000, () =>
+    server.listen(process.env.PORT || config.get("port"), () =>
       console.log(`Server has started.`)
     );
   } catch (e) {

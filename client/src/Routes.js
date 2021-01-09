@@ -1,7 +1,6 @@
 import React from "react";
 import MainPage from "./components/mainPage/MainPage";
 import ItemsPage from "./components/collection/ItemsPage";
-import CollectionsPage from "./components/collection/CollectionsPage";
 import { Switch, Route, Redirect } from "react-router-dom";
 import SignUpPage from "./components/authentication/SignUpPage";
 import SignInPage from "./components/authentication/SignInPage";
@@ -12,9 +11,6 @@ const Routes = () => {
       <Route path="/" exact>
         <MainPage />
       </Route>
-      <Route path="/account" exact>
-        <CollectionsPage />
-      </Route>
       <Route path="/collection/:id">
         <ItemsPage />
       </Route>
@@ -24,10 +20,10 @@ const Routes = () => {
       <Route path="/signIn">
         <SignInPage />
       </Route>
-      <Route path="/profile">
+      <Route path="/profile/:id">
         <UserPage/>
       </Route>
-      <Redirect to="/" />
+      <Redirect to="/"/>
     </Switch>
   );
 };

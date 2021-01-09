@@ -1,18 +1,18 @@
 import React from "react";
 import Cloud from "./Cloud";
-import CollectCard from "../collection/CollectCard";
+//import CollectionCard from "../collection/CollectionCard";
 import CollectItem from "../collection/CollectItem";
+/*<div className="col s12">
+<h3>Популярные коллекции</h3>
+  <CollectionCard />
+  <CollectionCard />
+  <CollectionCard />
+</div>*/
 const MainPage = () => {
   return (
     <div className="row">
       <div className="col s12">
         <Cloud />
-      </div>
-      <div className="col s12">
-        <h3>Популярные коллекции</h3>
-        <CollectCard />
-        <CollectCard />
-        <CollectCard />
       </div>
       <div className="col s12">
         <h3>Новые элементы</h3>
