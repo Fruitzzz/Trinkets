@@ -2,6 +2,7 @@ import { React, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
+import { Link as FlatButton } from "@material-ui/core";
 const SignUpPage = () => {
   const history = useHistory();
   const message = useMessage();
@@ -20,7 +21,6 @@ const SignUpPage = () => {
     clearError();
   }, [error, message, clearError]);
   const signUpHandler = async () => {
-    console.log(loading)
     try {
       await request("/api/auth/signUp", "POST", {
         name: form.name,
@@ -43,6 +43,7 @@ const SignUpPage = () => {
           type="text"
           name="name"
           onChange={changeHandler}
+          className="custom-input"
         />
         <label htmlFor="sign-up-name">Имя</label>
       </div>
@@ -51,7 +52,7 @@ const SignUpPage = () => {
           value={form.email}
           id="sign-up-email"
           type="email"
-          className="validate"
+          className="validate custom-input"
           name="email"
           onChange={changeHandler}
         />
@@ -64,6 +65,7 @@ const SignUpPage = () => {
           type="password"
           name="password"
           onChange={changeHandler}
+          className="custom-input"
         />
         <label htmlFor="sign-up-password">Пароль</label>
       </div>
@@ -74,21 +76,20 @@ const SignUpPage = () => {
           type="password"
           name="confirmPassword"
           onChange={changeHandler}
+          className="custom-input"
         />
         <label htmlFor="sign-up-confirm">Повторить пароль</label>
       </div>
       <div className="col s12">
-        <button
-          className="btn-flat right"
-          disabled={comparePasswords() || !loading}
+        <FlatButton
+          className="btn-flat blue-grey-text text-darken-2 right"
+          disabled={comparePasswords() || loading}
           onClick={signUpHandler}
         >
           <i className="material-icons right">send</i>
           Регистрация
-        </button>
-        <Link to="/signIn">
-          Уже есть аккаунт? Войдите.
-        </Link>
+        </FlatButton>
+        <Link to="/signIn">Уже есть аккаунт? Войдите.</Link>
       </div>
     </div>
   );

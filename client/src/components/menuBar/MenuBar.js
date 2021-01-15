@@ -4,16 +4,16 @@ import MobileMenu from "./MobileMenu";
 import { Dropdown, Icon } from "react-materialize";
 import { Link } from "react-router-dom";
 import { Link as FlatButton } from "@material-ui/core";
-import {UserContext} from "../../context/user.context";
+import { UserContext } from "../../context/user.context";
 const MenuBar = () => {
-  const {logout, user, isAuthenticated} = useContext(UserContext);
+  const { logout, user, isAuthenticated } = useContext(UserContext);
   return (
     <nav>
       <div className="nav-wrapper white z-depth-3">
         <Link to="/">
-        <span className="brand-logo blue-grey-text text-darken-2">
-          Trinkets
-        </span>
+          <span className="brand-logo blue-grey-text text-darken-2">
+            Trinkets
+          </span>
         </Link>
         <a href="!#" data-target="mobile" className="sidenav-trigger">
           <Icon className="blue-grey-text">menu</Icon>
@@ -31,9 +31,13 @@ const MenuBar = () => {
           </li>
           <li>
             {isAuthenticated ? (
-              <FlatButton className="blue-grey-text text-darken-2 nav-link" onClick={logout}>
+              <Link
+                className="blue-grey-text text-darken-2 nav-link"
+                to="/"
+                onClick={logout}
+              >
                 Выход
-              </FlatButton>
+              </Link>
             ) : (
               <Link
                 className="blue-grey-text text-darken-2 nav-link"
@@ -52,11 +56,14 @@ const MenuBar = () => {
                   </Avatar>
                 }
               >
-                <Link className="blue-grey-text text-darken-2 nav-link" to={`/profile/${user.id}`}>
+                <Link
+                  className="blue-grey-text text-darken-2 nav-link"
+                  to={`/profile/${user.id}`}
+                >
                   <Icon className="blue-grey-text text-darken-2">favorite</Icon>
                   Моя коллекция
                 </Link>
-                <FlatButton className="blue-grey-text text-darken-2 nav-link">
+                <FlatButton className="blue-grey-text text-darken-2 nav-link flat-button">
                   <Icon className="blue-grey-text text-darken-2">language</Icon>
                   Английский
                 </FlatButton>

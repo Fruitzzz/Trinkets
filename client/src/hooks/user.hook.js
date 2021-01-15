@@ -1,13 +1,18 @@
 import { useState, useCallback, useEffect } from "react";
 const storageName = "userData";
-export const useAuth = () => {
+export const useUser = () => {
   const [user, setUser] = useState({
     token: null,
     id: null,
     name: null,
   });
+  const [openedCollection, setOpen] = useState(null);
+
+  const setOpenedCollection = (opened) => {
+    setOpen({ ...opened });
+  };
   const signIn = useCallback((token, id, name) => {
-    setUser({token, id, name});
+    setUser({ token, id, name });
     localStorage.setItem(storageName, JSON.stringify({ token, id, name }));
   }, []);
   const logout = useCallback(() => {
@@ -24,7 +29,5 @@ export const useAuth = () => {
       signIn(data.token, data.id, data.name);
     }
   }, [signIn]);
- 
-
-  return { signIn, logout, user };
+  return { signIn, logout, user, openedCollection, setOpenedCollection };
 };

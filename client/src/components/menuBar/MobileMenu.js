@@ -33,7 +33,7 @@ const MobileMenu = () => {
       </li>
       <li>
         {isAuthenticated ? (
-          <Link className="blue-grey-text text-darken-2 sidenav-close" to="/profile">
+          <Link className="blue-grey-text text-darken-2 sidenav-close" to={`/profile/${user.id}`}>
             <Icon className="blue-grey-text text-darken-2">favorite</Icon>
             Моя коллекция
           </Link>
@@ -45,7 +45,7 @@ const MobileMenu = () => {
       </li>
       <li>
         {isAuthenticated ? (
-          <FlatButton className="blue-grey-text text-darken-2 nav-link sidenav-close" onClick={logout}>Выход</FlatButton>
+          <Link className="blue-grey-text text-darken-2 nav-link sidenav-close" to="/" onClick={logout}>Выход</Link>
         ) : (
           <Link className="blue-grey-text text-darken-2 nav-link sidenav-close" to="/signUp">
             Регистрация
@@ -66,7 +66,7 @@ const MobileMenu = () => {
         </div>
       </li>
       <li>
-        <FlatButton className="blue-grey-text text-darken-2">
+        <FlatButton className="blue-grey-text text-darken-2 flat-button">
           <Icon className="blue-grey-text text-darken-2">language</Icon>
           Английский
         </FlatButton>

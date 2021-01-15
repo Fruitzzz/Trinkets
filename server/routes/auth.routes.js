@@ -27,9 +27,9 @@ router.post(
         });
       }
       const { name, email, password } = req.body;
-      const candidate = await User.findOne({ $or: [{ email }, { name }] });
-      if (candidate) {
-        if (candidate.email === email) {
+      const twin = await User.findOne({ $or: [{ email }, { name }] });
+      if (twin) {
+        if (twin.email === email) {
           return res
             .status(400)
             .json({ message: "Этот email уже зарегистрирован" });
@@ -67,7 +67,6 @@ router.post("/signIn", [check("name").notEmpty()], async (req, res) => {
     const token = jwt.sign({ userId: user.id }, config.get("jwtSecret"));
     res.json({ token, userId: user.id, userName: user.name });
   } catch (e) {
-    console.log(e.message);
     res.status(500).json({ message: "Ошибка сервера" });
   }
 });

@@ -9,7 +9,7 @@ const config = require("config");
 app.use(cors());
 app.use(express.json({ extended: true }));
 app.use("/api/auth", require("./routes/auth.routes"));
-app.use("/api/content", require("./routes/content.routes"));
+app.use("/api/collections", require("./routes/collections.routes"));
 const start = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI || config.get("mongoUri"), {

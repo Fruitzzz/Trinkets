@@ -1,7 +1,7 @@
 import React from "react";
 import Cloud from "./Cloud";
 //import CollectionCard from "../collection/CollectionCard";
-import CollectItem from "../collection/CollectItem";
+import CollectionItem from "../content/Item";
 /*<div className="col s12">
 <h3>Популярные коллекции</h3>
   <CollectionCard />
@@ -17,9 +17,9 @@ const MainPage = () => {
       <div className="col s12">
         <h3>Новые элементы</h3>
         <ul className="collection">
-          <CollectItem />
-          <CollectItem />
-          <CollectItem />
+          <CollectionItem />
+          <CollectionItem />
+          <CollectionItem />
         </ul>
       </div>
     </div>

@@ -4,16 +4,16 @@ import MenuBar from "./components/menuBar/MenuBar";
 import "./style.css";
 import Routes from "./Routes";
 import { BrowserRouter as Router } from "react-router-dom";
-import { useAuth } from "./hooks/auth.hook";
+import { useUser } from "./hooks/user.hook";
 import { UserContext } from "./context/user.context";
 const App = () => {
   useEffect(() => {
     window.M.AutoInit();
   });
-  const { user, signIn, logout } = useAuth();
+  const { user, signIn, logout, openedCollection, setOpenedCollection } = useUser();
   return (
     <UserContext.Provider value={{
-      signIn, logout, user, isAuthenticated: !!user.token
+      signIn, logout, user, isAuthenticated: !!user.token, openedCollection, setOpenedCollection
     }}>
       <Router>
         <div className="App">

@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
 import {UserContext} from "../../context/user.context";
+import { Link as FlatButton } from "@material-ui/core";
 const SignInPage = () => {
   const user = useContext(UserContext)
   const message = useMessage();
@@ -35,6 +36,7 @@ const SignInPage = () => {
           type="text"
           name="name"
           onChange={changeHandler}
+          className="custom-input"
         />
         <label htmlFor="sign-in-name">Имя</label>
       </div>
@@ -44,18 +46,19 @@ const SignInPage = () => {
           type="password"
           name="password"
           onChange={changeHandler}
+          className="custom-input"
         />
         <label htmlFor="sign-in-password">Пароль</label>
       </div>
       <div className="col s12">
-        <button
-          className="btn-flat right"
+        <FlatButton
+          className="btn-flat blue-grey-text text-darken-2 right flat-button"
           disabled={loading}
           onClick={signInHandler}
         >
           <i className="material-icons right">send</i>
           Вход
-        </button>
+        </FlatButton>
         <Link to="/signUp">
           Нет аккаунта? Зарегистрируйтесь.
         </Link>
