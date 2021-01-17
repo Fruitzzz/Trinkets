@@ -7,6 +7,6 @@ const schema = new Schema({
   collectionTitle: { type: String, required: true },
   collectionId: { type: Types.ObjectId, ref: "Collection" },
   likes: {type: [Types.ObjectId], default: []},
-  Comments: {type: [], default: []}
+  сomments: {type: [], default: []}
 });
 module.exports = model("Item", schema);

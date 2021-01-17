@@ -29,14 +29,21 @@ router.get("/subjects", async (req, res) => {
 });
 router.get("/collection/:id", async (req, res) => {
   try {
-    const collectionId = req.params.id;
-    const collection = await Collection.findById(collectionId).lean();
-    const items = await Item.find({ collectionId }).lean();
+    const collection = await Collection.findById(req.params.id).lean();
+    const items = await Item.find({ collectionId: req.params.id }).lean();
     res.status(201).json({ collection: { ...collection }, items: items });
   } catch (e) {
     res.status(500).json({ message: "Ошибка сервера" });
   }
 });
+router.get("/item/:id", async (req, res) => {
+  try {
+    const item = await Item.findById(req.params.id).lean();
+    res.status(201).json({...item});
+  } catch(e) {
+    res.status(500).json({message: "Ошибка сервера"});
+  }
+})
 router.post(
   "/addNewCollection",
   [
@@ -96,7 +103,7 @@ router.post(
       item.save();
       return res.status(201).json({ message: "Успешно" });
     } catch (e) {
-      res.status(500).json({ message: "hui" });
+      res.status(500).json({ message: "Ошибка сервера" });
     }
   }
 );

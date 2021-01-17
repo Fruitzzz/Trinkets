@@ -7,6 +7,7 @@ import UserPage from "./components/content/UserPage";
 import NotFound from "./components/technical/NotFound";
 import AddCollPage from "./components/addCollection/AddCollPage";
 import CollectionPage from "./components/content/CollectionPage";
+import ItemPage from "./components/content/ItemPage";
 const Routes = () => {
   return (
     <Switch>
@@ -30,6 +31,9 @@ const Routes = () => {
       </Route>
       <Route path="/addCollection">
         <AddCollPage/>
+      </Route>
+      <Route path="/item/:id">
+        <ItemPage/>
       </Route>
       <Redirect to="/notFound"/>
     </Switch>
