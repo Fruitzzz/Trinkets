@@ -6,8 +6,7 @@ import SignInPage from "./components/authentication/SignInPage";
 import UserPage from "./components/content/UserPage";
 import NotFound from "./components/technical/NotFound";
 import AddCollPage from "./components/addCollection/AddCollPage";
-import Collection from "./components/content/Collection";
-import AddItemPage from "./components/addItem/AddItemPage";
+import CollectionPage from "./components/content/CollectionPage";
 const Routes = () => {
   return (
     <Switch>
@@ -15,7 +14,7 @@ const Routes = () => {
         <MainPage />
       </Route>
       <Route path="/collection/:id">
-        <Collection/>
+        <CollectionPage/>
       </Route>
       <Route path="/signUp">
         <SignUpPage />
@@ -31,9 +30,6 @@ const Routes = () => {
       </Route>
       <Route path="/addCollection">
         <AddCollPage/>
-      </Route>
-      <Route path="/addItem">
-      <AddItemPage/>
       </Route>
       <Redirect to="/notFound"/>
     </Switch>

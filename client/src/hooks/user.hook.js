@@ -6,11 +6,6 @@ export const useUser = () => {
     id: null,
     name: null,
   });
-  const [openedCollection, setOpen] = useState(null);
-
-  const setOpenedCollection = (opened) => {
-    setOpen({ ...opened });
-  };
   const signIn = useCallback((token, id, name) => {
     setUser({ token, id, name });
     localStorage.setItem(storageName, JSON.stringify({ token, id, name }));
@@ -29,5 +24,5 @@ export const useUser = () => {
       signIn(data.token, data.id, data.name);
     }
   }, [signIn]);
-  return { signIn, logout, user, openedCollection, setOpenedCollection };
+  return { signIn, logout, user };
 };

@@ -1,22 +1,52 @@
-import { useState, useContext } from "react";
-import {UserContext} from "../context/user.context";
+import { useState } from "react";
+
 export const useItem = () => {
-    const {openedCollection} = useContext(UserContext);
-  const [item, setItem] = useState({
+  const [newItem, setNewItem] = useState({
     title: "",
     tags: [],
     optionalFields: [],
-    collectionName: openedCollection.title,
-    collectionId: openedCollection.id,
+    collectionTitle: null,
+    collectionId: null,
   });
-  const editItem = (event) => {
-    setItem({ ...item, [event.target.name]: event.target.value });
+
+  const [items, setItems] = useState([]);
+
+  const addItem = (item) => {
+    setItems([...items, item]);
   };
+  const removeTag = (event) => {
+    const currentTags = newItem.tags;
+    currentTags.splice(event.target.name, 1);
+    setNewItem({ ...newItem, tags: currentTags });
+  };
+
+  const setTags = (tags) => {
+    setNewItem({ ...newItem, tags: tags });
+  };
+
+  const editNewItem = (event) => {
+    setNewItem({ ...newItem, [event.target.name]: event.target.value });
+  };
+
   const setFields = (fields) => {
-    setItem({ ...item, optionalFields: fields });
+    setNewItem({ ...newItem, optionalFields: fields });
   };
-  const changeFields = (event) => {
-    setItem({ ...item, [event.target.name]: event.target.value });
+
+  const changeFields = (index, value) => {
+    const fields = newItem.optionalFields;
+    fields[index].value = value;
+    setNewItem({ ...newItem, optionalFields: fields });
   };
-  return { item, editItem, setFields, changeFields };
+
+  return {
+    newItem,
+    editNewItem,
+    changeFields,
+    removeTag,
+    setTags,
+    items,
+    addItem,
+    setItems,
+    setFields,
+  };
 };

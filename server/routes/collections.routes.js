@@ -31,14 +31,14 @@ router.get("/collection/:id", async (req, res) => {
   try {
     const collectionId = req.params.id;
     const collection = await Collection.findById(collectionId).lean();
-    const items = await Item.find({ collectionId: collection.id }).lean();
+    const items = await Item.find({ collectionId }).lean();
     res.status(201).json({ collection: { ...collection }, items: items });
   } catch (e) {
     res.status(500).json({ message: "Ошибка сервера" });
   }
 });
 router.post(
-  "/addNew",
+  "/addNewCollection",
   [
     check("title", "Введите название коллекции").notEmpty(),
     check("description", "Введите описание").notEmpty(),
@@ -71,8 +71,32 @@ router.post(
       collection.save();
       res.status(201).json({ message: "Успешно" });
     } catch (e) {
-      console.log(e.message);
       res.status(500).json({ message: "Ошибка сервера" });
+    }
+  }
+);
+router.post(
+  "/addNewItem",
+  [
+    check("title", "Введите название элемента").notEmpty(),
+    check("tags", "Элементы должны иметь как минимум один тег").notEmpty(),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        message: errors
+          .array()
+          .map((el) => el.msg)
+          .join(". "),
+      });
+    }
+    try {
+      const item = new Item({ ...req.body });
+      item.save();
+      return res.status(201).json({ message: "Успешно" });
+    } catch (e) {
+      res.status(500).json({ message: "hui" });
     }
   }
 );

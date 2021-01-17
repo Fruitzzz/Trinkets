@@ -22,7 +22,7 @@ const AddCollPage = () => {
 
   const addHandler = async () => {
     try {
-      await request("/api/collections/addNew", "POST", {
+      await request("/api/collections/addNewCollection", "POST", {
         ...collection,
       });
       history.push(`/profile/${collection.ownerId}`);

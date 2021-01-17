@@ -20,7 +20,7 @@ export const useCollection = () => {
       ...collection,
       optionalFields: [
         ...collection.optionalFields,
-        { type: event.target.name, name: "" },
+        { type: event.target.name, name: "", value: ""},
       ],
     });
   };

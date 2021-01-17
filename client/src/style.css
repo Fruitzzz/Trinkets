@@ -77,12 +77,15 @@
 .dropzone:hover, .blue-border-btn:hover {
     border: 1px solid #3f51b5;
 }
-.custom-input:focus + label, .custom-input:focus + label  {
+.custom-input:focus + label, .input-field>label:not(.label-icon).active, .datepicker-cancel, .datepicker-done {
     color: #3f51b5 !important;
 }
-.custom-input:focus {
+.custom-input:focus, #tags:focus, .chips.focus {
     border-bottom: 1px solid #3f51b5 !important;
     box-shadow: 0 1px 0 0 #3f51b5 !important;
+}
+.chip:focus, .datepicker-date-display, .datepicker-table td.is-selected {
+    background-color: #3f51b5;
 }
 .custom-input {
     font-size: 15px;
@@ -93,4 +96,8 @@ button:focus {
 }
 .input-field .custom-input:hover, .custom-input:hover::before {
     border-bottom: 1px solid #3f51b5 !important;
+}
+[type="checkbox"]:checked+span:not(.lever):before {
+    border-right: 2px solid #3f51b5;
+    border-bottom: 2px solid #3f51b5;
 }

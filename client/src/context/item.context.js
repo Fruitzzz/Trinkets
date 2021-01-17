@@ -1,8 +1,12 @@
 import { createContext } from "react";
 
 export const ItemContext = createContext({
-  item: null,
-  editItem: () => {},
+  newItem: null,
+  items: [],
+  addItem: () => {},
   setFields: () => {},
-  changeField: () => {},
+  editNewItem: () => {},
+  changeFields: () => {},
+  removeTag: () => {},
+  setTags: () => {},
 });

@@ -10,10 +10,10 @@ const App = () => {
   useEffect(() => {
     window.M.AutoInit();
   });
-  const { user, signIn, logout, openedCollection, setOpenedCollection } = useUser();
+  const { user, signIn, logout} = useUser();
   return (
     <UserContext.Provider value={{
-      signIn, logout, user, isAuthenticated: !!user.token, openedCollection, setOpenedCollection
+      signIn, logout, user, isAuthenticated: !!user.token
     }}>
       <Router>
         <div className="App">

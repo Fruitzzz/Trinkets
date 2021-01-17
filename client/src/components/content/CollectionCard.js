@@ -1,23 +1,14 @@
-import { React, useContext } from "react";
+import { React } from "react";
 import Alc from "../../images/Alc.jpg";
 import { Link } from "react-router-dom";
 import { Card, CardTitle, Icon } from "react-materialize";
-import { UserContext } from "../../context/user.context";
 const CollectionCard = ({ collection }) => {
-  const { setOpenedCollection } = useContext(UserContext);
-  const clickHandler = () => {
-    setOpenedCollection({ id: collection._id, title: collection.title });
-  };
   return (
     <Card
       className="col s12 m4 hoverable"
       actions={[
         <Link key={collection._id} to={`/collection/${collection._id}`}>
-          <button
-            className="btn-flat right"
-            style={{ marginBottom: "10px" }}
-            onClick={clickHandler}
-          >
+          <button className="btn-flat right" style={{ marginBottom: "10px" }}>
             Подробнее
           </button>
         </Link>,
