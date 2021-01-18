@@ -1,30 +1,32 @@
-import { React, useEffect, useCallback, useState } from "react";
+import { React, useEffect, useCallback, useState, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import Loader from "../technical/Loader";
-import { useHttp } from "../../hooks/http.hook";
 import { Chip } from "react-materialize";
 import OptionalField from "./OptionalField";
 import Comment from "./Comment";
 import AddComment from "../social/AddComment";
 import LikeSection from "../social/LikeSection";
+import {SocketContext} from "../../context/socket.context";
 const ItemPage = () => {
-  const { request } = useHttp();
+  const socket = useContext(SocketContext);
   const history = useHistory();
   const params = useParams();
   const [item, setItem] = useState(null);
   const fetchItem = useCallback(async () => {
     try {
-      const fetched = await request(`/api/collections/item/${params.id}`);
-      setItem(fetched);
-      console.log(fetched);
+      socket.emit("reqItem", params.id)
     } catch (e) {
       history.push("/notFound");
     }
-  }, [request, params.id, history]);
+  }, [params.id, socket, history]);
   useEffect(() => {
     fetchItem();
   }, [fetchItem]);
-
+  useEffect(() => {
+    socket.on("resItem", (fetched) => {
+      setItem(fetched)
+    })
+  }, [socket])
   if (!item) {
     return <Loader />;
   }
