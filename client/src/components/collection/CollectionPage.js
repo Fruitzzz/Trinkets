@@ -6,7 +6,7 @@ import Alc from "../../images/Alc.jpg";
 import { Collapsible, CollapsibleItem, Icon } from "react-materialize";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
-import ItemsSection from "./ItemsSection";
+import ItemsSection from "../item/ItemsSection";
 import { useItem } from "../../hooks/item.hook";
 import { ItemContext } from "../../context/item.context";
 const CollectionPage = () => {
@@ -55,6 +55,7 @@ const CollectionPage = () => {
         removeTag,
         setTags,
         addItem,
+        setItems,
         setFields
       }}
     >

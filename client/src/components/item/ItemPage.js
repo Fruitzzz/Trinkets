@@ -3,7 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import Loader from "../technical/Loader";
 import { Chip } from "react-materialize";
 import OptionalField from "./OptionalField";
-import Comment from "./Comment";
+import Comment from "../social/Comment";
 import AddComment from "../social/AddComment";
 import LikeSection from "../social/LikeSection";
 import { SocketContext } from "../../context/socket.context";

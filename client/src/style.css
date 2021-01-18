@@ -63,6 +63,13 @@
 .card {
     min-width: 240px;
 }
+.card .card-title {
+    font-size: 28px;
+    font-weight: 300;
+}
+.card .card-content p {
+    margin-left: 5px;
+}
 .input-field .prefix.active {
     color: #181818;
 }

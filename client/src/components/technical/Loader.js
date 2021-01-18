@@ -2,8 +2,8 @@ import React from "react";
 
 const Loader = () => {
   return (
-    <div className="valign-wrapper progress">
-      <div className="indeterminate"></div>
+    <div className="valign-wrapper progress indigo darken-1">
+      <div className="indeterminate red"></div>
     </div>
   );
 };

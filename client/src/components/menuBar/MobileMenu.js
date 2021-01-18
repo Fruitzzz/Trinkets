@@ -15,7 +15,7 @@ const MobileMenu = () => {
           <div className="background">
             <img alt="back" src={background}></img>
           </div>
-          <Avatar className="avatar red lighten-2">{user.name[0]}</Avatar>
+          <Avatar className="avatar indigo darken-1">{user.name[0]}</Avatar>
           <span className="name">{user.name}</span>
           <span>{"Количество элементов: 30"}</span>
         </div>

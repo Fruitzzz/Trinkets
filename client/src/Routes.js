@@ -3,11 +3,11 @@ import MainPage from "./components/mainPage/MainPage";
 import { Switch, Route, Redirect } from "react-router-dom";
 import SignUpPage from "./components/authentication/SignUpPage";
 import SignInPage from "./components/authentication/SignInPage";
-import UserPage from "./components/content/UserPage";
+import UserPage from "./components/collection/UserPage";
 import NotFound from "./components/technical/NotFound";
 import AddCollPage from "./components/addCollection/AddCollPage";
-import CollectionPage from "./components/content/CollectionPage";
-import ItemPage from "./components/content/ItemPage";
+import CollectionPage from "./components/collection/CollectionPage";
+import ItemPage from "./components/item/ItemPage";
 const Routes = () => {
   return (
     <Switch>

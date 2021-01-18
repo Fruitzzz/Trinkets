@@ -5,6 +5,7 @@ export const ItemContext = createContext({
   items: [],
   addItem: () => {},
   setFields: () => {},
+  setItems: () => {},
   editNewItem: () => {},
   changeFields: () => {},
   removeTag: () => {},

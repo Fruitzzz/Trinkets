@@ -51,7 +51,7 @@ const MenuBar = () => {
             {isAuthenticated ? (
               <Dropdown
                 trigger={
-                  <Avatar className=" avatar avatar-desk red lighten-2">
+                  <Avatar className=" avatar avatar-desk indigo darken-1">
                     {user.name[0]}
                   </Avatar>
                 }

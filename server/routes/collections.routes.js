@@ -107,6 +107,30 @@ router.post(
     }
   }
 );
+router.post(
+  "/removeCollection", async(req, res) => {
+    try {
+      await Collection.findByIdAndDelete(req.body.id);
+      const collections = await Collection.find({ownerId: req.body.ownerId})
+      res.status(201).json([...collections]);
+    }
+    catch(e) {
+      res.status(500).json({message: "Ошибка сервера"});
+    }
+  }
+)
+router.post(
+  "/removeItem", async(req, res) => {
+    try {
+      await Item.findByIdAndDelete(req.body.itemId);
+      const items = await Item.find({collectionId: req.body.collectionId})
+      res.status(201).json([...items])
+    }
+    catch(e) {
+      res.status(500).json({message: "Ошибка сервера"});
+    }
+  }
+)
 module.exports = router;
 /*  const array = [
       {"bool": true},
