@@ -1,20 +1,21 @@
-import { React, useCallback } from "react";
+import { React, useCallback, useContext, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import {useCollection} from "../../hooks/collection.hook";
+import { CollectionContext } from "../../context/collection.context";
 const Dropzone = () => {
-  const {setImage} = useCollection();
+  const { setImage } = useContext(CollectionContext);
+  const [previewSource, setPreviewSource] = useState(null);
   const onDrop = useCallback(
     (acceptedFile) => {
-      setImage(acceptedFile);
+      const reader = new FileReader();
+      reader.readAsDataURL(acceptedFile[0]);
+      reader.onloadend = () => {
+        setPreviewSource(reader.result);
+        setImage(reader.result);
+      };
     },
     [setImage]
   );
-  const {
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    acceptedFiles,
-  } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: "image/*",
     multiple: false,
@@ -35,10 +36,12 @@ const Dropzone = () => {
           )}
         </div>
       </div>
-      {acceptedFiles.length !== 0 && (
-        <p>
-          {acceptedFiles[0].name} - {acceptedFiles[0].size} bytes
-        </p>
+      {previewSource && (
+        <img
+          className="img-preview responsive-img"
+          src={previewSource}
+          alt="preview"
+        />
       )}
     </div>
   );

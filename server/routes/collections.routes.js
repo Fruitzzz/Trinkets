@@ -3,9 +3,9 @@ const Collection = require("../models/Collection");
 const User = require("../models/User");
 const Item = require("../models/Item");
 const Subjects = require("../models/Subjects");
-const mongoose = require("mongoose");
 const { check, validationResult } = require("express-validator");
 const router = express.Router();
+const { cloudinary } = require("../utils/cloudinary");
 
 router.get("/user/:id", async (req, res) => {
   try {
@@ -36,14 +36,6 @@ router.get("/collection/:id", async (req, res) => {
     res.status(500).json({ message: "Ошибка сервера" });
   }
 });
-router.get("/item/:id", async (req, res) => {
-  try {
-    const item = await Item.findById(req.params.id).lean();
-    res.status(201).json({...item});
-  } catch(e) {
-    res.status(500).json({message: "Ошибка сервера"});
-  }
-})
 router.post(
   "/addNewCollection",
   [
@@ -74,78 +66,31 @@ router.post(
           .status(400)
           .json({ message: "Коллекция с таким названием есть" });
       }
-      const collection = new Collection({ ...req.body });
+      const uploadedResponse = await cloudinary.uploader.upload(
+        req.body.image,
+        { upload_preset: "ml_default" }
+      );
+      const collection = new Collection({
+        ...req.body,
+        pictureId: uploadedResponse.public_id,
+      });
       collection.save();
       res.status(201).json({ message: "Успешно" });
     } catch (e) {
+      console.log(e.message);
       res.status(500).json({ message: "Ошибка сервера" });
     }
   }
 );
-router.post(
-  "/addNewItem",
-  [
-    check("title", "Введите название элемента").notEmpty(),
-    check("tags", "Элементы должны иметь как минимум один тег").notEmpty(),
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({
-        message: errors
-          .array()
-          .map((el) => el.msg)
-          .join(". "),
-      });
-    }
-    try {
-      const item = new Item({ ...req.body });
-      item.save();
-      return res.status(201).json({ message: "Успешно" });
-    } catch (e) {
-      res.status(500).json({ message: "Ошибка сервера" });
-    }
-  }
-);
-router.post(
-  "/removeCollection", async(req, res) => {
-    try {
-      await Collection.findByIdAndDelete(req.body.id);
-      const collections = await Collection.find({ownerId: req.body.ownerId})
-      res.status(201).json([...collections]);
-    }
-    catch(e) {
-      res.status(500).json({message: "Ошибка сервера"});
-    }
-  }
-)
-router.post(
-  "/removeItem", async(req, res) => {
-    try {
-      await Item.findByIdAndDelete(req.body.itemId);
-      const items = await Item.find({collectionId: req.body.collectionId})
-      res.status(201).json([...items])
-    }
-    catch(e) {
-      res.status(500).json({message: "Ошибка сервера"});
-    }
-  }
-)
-module.exports = router;
-/*  const array = [
-      {"bool": true},
-      {"text": "text"},
-      {"date": "2020-12-12"},
-      {"num": 12},
-    ];
 
-      const collection = new Collection({
-      title: "Test2",
-      description: "TestDescription2",
-      subject: "TestSubject2",
-      ownerId: userId,
-      ownerName: "Alex",
-      optionalFields: array,
-    });
-     collection.save();
-    */
+router.post("/removeCollection", async (req, res) => {
+  try {
+    const deleted = await Collection.findByIdAndDelete(req.body.id);
+    cloudinary.uploader.destroy(deleted.pictureId);
+    const collections = await Collection.find({ ownerId: req.body.ownerId });
+    res.status(201).json([...collections]);
+  } catch (e) {
+    res.status(500).json({ message: "Ошибка сервера" });
+  }
+});
+module.exports = router;

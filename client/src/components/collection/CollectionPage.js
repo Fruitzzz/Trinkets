@@ -2,13 +2,13 @@ import { React, useCallback, useState, useEffect } from "react";
 import Loader from "../technical/Loader";
 import { useHttp } from "../../hooks/http.hook";
 import { useParams, useHistory } from "react-router-dom";
-import Alc from "../../images/Alc.jpg";
 import { Collapsible, CollapsibleItem, Icon } from "react-materialize";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import ItemsSection from "../item/ItemsSection";
 import { useItem } from "../../hooks/item.hook";
 import { ItemContext } from "../../context/item.context";
+import {Image} from "cloudinary-react";
 const CollectionPage = () => {
   const { request } = useHttp();
   const history = useHistory();
@@ -61,7 +61,7 @@ const CollectionPage = () => {
     >
       <div className="row content">
         <div className="col s12 m6">
-          <img alt="" className="responsive-img" src={Alc} />
+          <Image cloudName="dxqkl2we4" publicId={collection.pictureId} className="responsive-img" style={{marginTop: "25px"}}/>
         </div>
         <div className="col s12 m6">
           <ul className="collection with-header">

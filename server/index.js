@@ -2,13 +2,14 @@ const http = require("http");
 const express = require("express");
 const mongoose = require("mongoose");
 const config = require("config");
-const socketConnect = require("./socket");
+const socketConnect = require("./utils/socket");
 const app = express();
 const server = http.createServer(app);
 
-app.use(express.json({ extended: true }));
+app.use(express.json({ extended: true, limit: "50mb" }));
 app.use("/api/auth", require("./routes/auth.routes"));
 app.use("/api/collections", require("./routes/collections.routes"));
+app.use("/api/items", require("./routes/items.routes"));
 socketConnect(server);
 
 

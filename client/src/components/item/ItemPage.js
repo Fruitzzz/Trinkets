@@ -44,10 +44,10 @@ const ItemPage = () => {
       <div className="col s12 m8 offset-m2">
         <ul className="collection with-header">
           <li className="collection-header">
-            <p className=" flow-text center-align">Название: {item.title}</p>
+            <h3 className="center-align">{item.title}</h3>
           </li>
           <li className="collection-item">
-            <p className="flow-text center-align">
+            <p className="flow-text ">
               Коллекция: {item.collectionTitle}
             </p>
           </li>
@@ -58,6 +58,9 @@ const ItemPage = () => {
                 {tag.tag}
               </Chip>
             ))}
+          </li>
+          <li className="collection-item">
+            <span className="flow-text">Дата добавления: {item.creationDate.slice(0, 10)}</span>
           </li>
           {item.optionalFields.map((field, index) => (
             <OptionalField key={index} field={field} index={index} />

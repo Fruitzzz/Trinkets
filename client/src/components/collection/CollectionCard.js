@@ -10,7 +10,7 @@ import {
   Button,
 } from "@material-ui/core";
 import { useHttp } from "../../hooks/http.hook";
-import Alc from "../../images/Alc.jpg";
+import { Image } from "cloudinary-react";
 const CollectionCard = ({ collection, setCollections }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
@@ -37,14 +37,12 @@ const CollectionCard = ({ collection, setCollections }) => {
       );
       setOpen(false);
       setCollections([...response]);
-    } catch (e) {
-      console.log(e.message);
-    }
+    } catch (e) {}
   };
   return (
     <div className="card col s12 m4 hoverable">
       <div className="card-image">
-        <img alt="collection" src={Alc} />
+        <Image cloudName="dxqkl2we4" height={300} publicId={collection.pictureId}/>
         <button
           aria-controls="menu"
           aria-haspopup="true"
@@ -102,7 +100,12 @@ const CollectionCard = ({ collection, setCollections }) => {
           Вы уверены, что хотите удалить коллекцию?
         </DialogTitle>
         <DialogActions>
-          <Button onClick={handleCloseModal} disabled={loading} color="primary" autoFocus>
+          <Button
+            onClick={handleCloseModal}
+            disabled={loading}
+            color="primary"
+            autoFocus
+          >
             Нет
           </Button>
           <Button onClick={acceptHandler} disabled={loading} color="primary">

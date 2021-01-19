@@ -7,4 +7,5 @@ export const CollectionContext = createContext({
   addField: () => {},
   removeField: () => {},
   changeField: () => {},
+  setImage: () => {},
 });

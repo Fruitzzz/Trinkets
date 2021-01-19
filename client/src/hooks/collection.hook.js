@@ -8,19 +8,21 @@ export const useCollection = () => {
     title: "",
     description: "",
     subject: "",
-    pictureURL: null,
+    image: null,
     optionalFields: [],
   });
-  const [image, setImage] = useState(null);
   const editCollection = (event) => {
     setCollection({ ...collection, [event.target.name]: event.target.value });
+  };
+  const setImage = (image) => {
+    setCollection({ ...collection, image });
   };
   const addField = (event) => {
     setCollection({
       ...collection,
       optionalFields: [
         ...collection.optionalFields,
-        { type: event.target.name, name: "", value: ""},
+        { type: event.target.name, name: "", value: "" },
       ],
     });
   };
@@ -41,6 +43,5 @@ export const useCollection = () => {
     removeField,
     changeField,
     setImage,
-    image,
   };
 };

@@ -1,5 +1,8 @@
 {
     "port": 5000,
     "jwtSecret": "Trinkets itra-course",
-    "mongoUri": "mongodb+srv://Fruitzz:qwerty00@cluster0.4u2qd.mongodb.net/<dbname>?retryWrites=true&w=majority"
+    "mongoUri": "mongodb+srv://Fruitzz:qwerty00@cluster0.4u2qd.mongodb.net/<dbname>?retryWrites=true&w=majority",
+    "cloudSecret": "Eu7gJt4VYJqHXTMn0zvuBIFbVRM",
+    "cloudKey": "292886184847982",
+    "cloudName": "dxqkl2we4"
 }

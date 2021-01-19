@@ -8,7 +8,7 @@ const Item = ({ item }) => {
   const {setItems} = useContext(ItemContext);
 
   const removeClickHandler = async () => {
-   const response = await request("/api/collections/removeItem", "POST", {itemId: item._id, collectionId: item.collectionId});
+   const response = await request("/api/items/removeItem", "POST", {itemId: item._id, collectionId: item.collectionId});
    setItems([...response]);
   }
   return (
@@ -24,6 +24,9 @@ const Item = ({ item }) => {
           <Chip key={index}>{tag.tag}</Chip>
         ))}
       </div>
+      <p>
+        {`Дата добавления: ${item.creationDate.slice(0, 10)}`}
+      </p>
       <Icon className="secondary-content blue-grey-text text-darken-2" onClick={removeClickHandler}>
         highlight_off
       </Icon>

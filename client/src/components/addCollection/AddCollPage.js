@@ -18,13 +18,14 @@ const AddCollPage = () => {
     addField,
     removeField,
     changeField,
+    setImage,
   } = useCollection();
 
   const addHandler = async () => {
     try {
-      await request("/api/collections/addNewCollection", "POST", {
-        ...collection,
-      });
+       await request("/api/collections/addNewCollection", "POST", {
+         ...collection,
+       });
       history.push(`/profile/${collection.ownerId}`);
     } catch (e) {}
   };
@@ -54,6 +55,7 @@ const AddCollPage = () => {
         removeField,
         changeField,
         subjects,
+        setImage,
       }}
     >
       <div className="row content">

@@ -14,7 +14,7 @@ const AddItemModal = () => {
   };
   const addItemHandler = async () => {
     try {
-      await request("/api/collections/addNewItem", "POST", { ...newItem });
+      await request("/api/items/addNewItem", "POST", { ...newItem });
     } catch (e) {}
   };
   useEffect(() => {
