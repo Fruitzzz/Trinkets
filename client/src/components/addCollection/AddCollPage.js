@@ -1,5 +1,5 @@
-import { React, useCallback, useEffect, useState } from "react";
-import Dropzone from "./Dropzone";
+import { React, useEffect,} from "react";
+import Dropzone from "../technical/Dropzone";
 import AddCollForm from "./AddCollForm";
 import Button from "@material-ui/core/Button";
 import { useHttp } from "../../hooks/http.hook";
@@ -9,7 +9,6 @@ import { useCollection } from "../../hooks/collection.hook";
 import { useHistory } from "react-router-dom";
 const AddCollPage = () => {
   const history = useHistory();
-  const [subjects, setSubjects] = useState([]);
   const { loading, request, error, clearError } = useHttp();
   const message = useMessage();
   const {
@@ -23,23 +22,12 @@ const AddCollPage = () => {
 
   const addHandler = async () => {
     try {
-       await request("/api/collections/addNewCollection", "POST", {
-         ...collection,
-       });
+      await request("/api/collections/addNewCollection", "POST", {
+        ...collection,
+      });
       history.push(`/profile/${collection.ownerId}`);
     } catch (e) {}
   };
-
-  const fetchSubjects = useCallback(async () => {
-    try {
-      const fetched = await request("/api/collections/subjects");
-      setSubjects(fetched.subjects);
-    } catch (e) {}
-  }, [request]);
-
-  useEffect(() => {
-    fetchSubjects();
-  }, [fetchSubjects]);
 
   useEffect(() => {
     message(error);
@@ -54,12 +42,11 @@ const AddCollPage = () => {
         addField,
         removeField,
         changeField,
-        subjects,
         setImage,
       }}
     >
       <div className="row content">
-        <Dropzone />
+        <Dropzone setImage={setImage}/>
         <AddCollForm />
         <div className="col s12">
           <Button

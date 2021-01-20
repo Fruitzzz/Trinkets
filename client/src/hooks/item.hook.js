@@ -10,10 +10,6 @@ export const useItem = () => {
   });
 
   const [items, setItems] = useState([]);
-
-  const addItem = (item) => {
-    setItems([...items, item]);
-  };
   const removeTag = (event) => {
     const currentTags = newItem.tags;
     currentTags.splice(event.target.name, 1);
@@ -21,6 +17,7 @@ export const useItem = () => {
   };
 
   const setTags = (tags) => {
+    console.log(tags);
     setNewItem({ ...newItem, tags: tags });
   };
 
@@ -45,7 +42,6 @@ export const useItem = () => {
     removeTag,
     setTags,
     items,
-    addItem,
     setItems,
     setFields,
   };

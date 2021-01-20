@@ -1,23 +1,22 @@
 import { React, useCallback, useState, useEffect } from "react";
-import Loader from "../technical/Loader";
 import { useHttp } from "../../hooks/http.hook";
 import { useParams, useHistory } from "react-router-dom";
-import { Collapsible, CollapsibleItem, Icon } from "react-materialize";
-import ReactMarkdown from "react-markdown";
-import gfm from "remark-gfm";
-import ItemsSection from "../item/ItemsSection";
 import { useItem } from "../../hooks/item.hook";
 import { ItemContext } from "../../context/item.context";
-import {Image} from "cloudinary-react";
+import { Image } from "cloudinary-react";
+import Loader from "../technical/Loader";
+import ItemsSection from "../item/ItemsSection";
+import CollapsibleMarkdown from "../technical/CollapsibleMarkdown";
+import EditFAB from "../technical/EditFAB";
+import UpdateCollectionModal from "../collection/UpdateCollectionModal";
 const CollectionPage = () => {
-  const { request } = useHttp();
+  const { request, loading } = useHttp();
   const history = useHistory();
   const params = useParams();
   const [collection, setCollection] = useState(null);
   const {
     newItem,
     items,
-    addItem,
     editNewItem,
     changeFields,
     removeTag,
@@ -25,6 +24,7 @@ const CollectionPage = () => {
     setItems,
     setFields,
   } = useItem();
+  const [openUpdate, setOpenUpdate] = useState(false);
   const fetchCollection = useCallback(async () => {
     try {
       const fetched = await request(`/api/collections/collection/${params.id}`);
@@ -34,12 +34,31 @@ const CollectionPage = () => {
       history.push("/notFound");
     }
   }, [request, params.id, history, setItems]);
+
   useEffect(() => {
     fetchCollection();
   }, [fetchCollection]);
   if (!collection) {
     return <Loader />;
   }
+  const deleteHandler = async () => {
+    try {
+      await request("/api/collections/removeCollection", "POST", {
+        id: collection._id,
+      });
+      history.push(`/profile/${collection.ownerId}`);
+    } catch (e) {}
+  };
+  const updateHandler = async (update) => {
+    try {
+      const response = await request("/api/collections/updateCollection", "POST", {
+        ...update 
+      });
+     const currentCollection =  response.find(item => item._id === collection._id)
+      setCollection(currentCollection)
+      setOpenUpdate(false);
+    } catch {}
+  };
   return (
     <ItemContext.Provider
       value={{
@@ -54,14 +73,17 @@ const CollectionPage = () => {
         changeFields,
         removeTag,
         setTags,
-        addItem,
         setItems,
-        setFields
+        setFields,
       }}
     >
       <div className="row content">
         <div className="col s12 m6">
-          <Image cloudName="dxqkl2we4" publicId={collection.pictureId} className="responsive-img" style={{marginTop: "25px"}}/>
+          <Image
+            cloudName="dxqkl2we4"
+            publicId={collection.imageId}
+            className="responsive-img"
+          />
         </div>
         <div className="col s12 m6">
           <ul className="collection with-header">
@@ -80,21 +102,15 @@ const CollectionPage = () => {
           </ul>
         </div>
         <div className="col s12">
-          <Collapsible accordion>
-            <CollapsibleItem
-              expanded={false}
-              header="Описание"
-              icon={<Icon>more_horiz</Icon>}
-            >
-              <ReactMarkdown
-                plugins={[gfm]}
-                children={collection.description}
-              ></ReactMarkdown>
-            </CollapsibleItem>
-          </Collapsible>
+          <CollapsibleMarkdown
+            header="Описание"
+            description={collection.description}
+          />
           <ItemsSection />
         </div>
       </div>
+      <EditFAB deleteHandler={deleteHandler} updateHandler={setOpenUpdate}/>
+      <UpdateCollectionModal collection={collection} open={openUpdate} setOpen={setOpenUpdate} updateHandler={updateHandler} loading={loading}/>
     </ItemContext.Provider>
   );
 };

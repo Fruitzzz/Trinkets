@@ -2,12 +2,14 @@ const express = require("express");
 const Item = require("../models/Item");
 const { check, validationResult } = require("express-validator");
 const router = express.Router();
+const success = {msg: "Успешно"};
+const fail = {msg: "Ошибка сервера"}
 router.get("/item/:id", async (req, res) => {
   try {
     const item = await Item.findById(req.params.id).lean();
     res.status(201).json({ ...item });
   } catch (e) {
-    res.status(500).json({ message: "Ошибка сервера" });
+    res.status(500).json({ msg: "Ошибка сервера" });
   }
 });
 router.post(
@@ -20,7 +22,7 @@ router.post(
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
-        message: errors
+        msg: errors
           .array()
           .map((el) => el.msg)
           .join(". "),
@@ -28,20 +30,37 @@ router.post(
     }
     try {
       const item = new Item({ ...req.body });
-      item.save();
-      return res.status(201).json({ message: "Успешно" });
+      await item.save();
+      const items = await Item.find({collectionId: req.body.collectionId});
+      return res.status(201).json([...items]);
     } catch (e) {
-      res.status(500).json({ message: "Ошибка сервера" });
+      res.status(500).json(fail);
     }
   }
 );
 router.post("/removeItem", async (req, res) => {
   try {
     await Item.findByIdAndDelete(req.body.itemId);
-    const items = await Item.find({ collectionId: req.body.collectionId });
+    if(req.body.collectionId) {
+      const items = await Item.find({ collectionId: req.body.collectionId });
     res.status(201).json([...items]);
+    }
+    else 
+      res.status(201).json(success);
   } catch (e) {
-    res.status(500).json({ message: "Ошибка сервера" });
+    res.status(500).json(fail);
   }
 });
+router.post("/updateItem", async (req, res) => {
+  try{
+   const {id, title, tags} = req.body;
+   await Item.findByIdAndUpdate(id, {title, tags});
+   const item = await Item.findById(id).lean();
+   res.status(201).json({...item})
+  }
+  catch(e) {
+    console.log(e.message);
+    res.status(500).json(fail);
+  }
+})
 module.exports = router;

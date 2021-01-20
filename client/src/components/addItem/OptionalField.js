@@ -1,5 +1,5 @@
 import { React, useContext } from "react";
-import { TextInput, DatePicker} from "react-materialize";
+import { TextInput, DatePicker } from "react-materialize";
 import { ItemContext } from "../../context/item.context";
 const OptionalField = ({ item, index }) => {
   const { changeFields, newItem } = useContext(ItemContext);
@@ -10,13 +10,13 @@ const OptionalField = ({ item, index }) => {
     changeFields(index, event.target.value);
   };
   const dateHandler = (date) => {
-      const format = date.toString().slice(4, 15)
-      changeFields(index, format);
+    const format = date.toString().slice(4, 15);
+    changeFields(index, format);
   };
   switch (item.type) {
     case "boolean": {
       return (
-        <div className="col s12">
+        <div className="col s12 m6 offset-m3">
           <label>
             <input
               type="checkbox"
@@ -30,7 +30,7 @@ const OptionalField = ({ item, index }) => {
     }
     case "number": {
       return (
-        <div className="input-field col s12">
+        <div className="input-field col s12 m6 offset-m3">
           <input
             value={newItem.optionalFields[index].value}
             id={`number-${index}`}
@@ -45,7 +45,7 @@ const OptionalField = ({ item, index }) => {
     }
     case "text": {
       return (
-        <div className="input-field col s12">
+        <div className="input-field col s12 m6 offset-m3">
           <textarea
             value={newItem.optionalFields[index].value}
             id={`text-${index}`}
@@ -58,17 +58,19 @@ const OptionalField = ({ item, index }) => {
     }
     case "date": {
       return (
-        <DatePicker
-          value={newItem.optionalFields[index].value}
-          onChange={dateHandler}
-          id={`date-${index}`}
-          label={item.name}
-          s={12}
-          options={{
+        <div className="input-field col s12 m6 offset-m3" style={{padding: 0}}>
+          <DatePicker
+            value={newItem.optionalFields[index].value}
+            onChange={dateHandler}
+            id={`date-${index}`}
+            s={12}
+            label={item.name}
+            options={{
               setDefaultDate: true,
               onSelect: dateHandler,
-          }}
-        />
+            }}
+          />
+        </div>
       );
     }
     default: {

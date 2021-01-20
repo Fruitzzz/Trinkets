@@ -23,9 +23,12 @@ const socketConnect = (server) => {
   io.on("connect", (socket) => {
     socket.on("reqItem", async (itemId) => {
       const item = await Item.findById(itemId).lean();
+      const clone = getViewer(socket.id)
+      if(clone)
+        removeViewer(clone.id);
       const newViewer = addViewer({ id: socket.id, itemId });
       socket.join(newViewer.itemId);
-      socket.emit("resItem", item);
+     socket.emit("resItem", item);
     });
 
     socket.on("addComment", async (comment) => {
@@ -47,6 +50,9 @@ const socketConnect = (server) => {
         io.sockets.in(viewer.itemId).emit("updateItem", item)
       }
     });
+    socket.on("disconnect", () => {
+      removeViewer(socket.id);
+    })
   });
 };
 

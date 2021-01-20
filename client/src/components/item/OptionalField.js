@@ -1,7 +1,5 @@
 import { React } from "react";
-import { Collapsible, CollapsibleItem, Icon } from "react-materialize";
-import ReactMarkdown from "react-markdown";
-import gfm from "remark-gfm";
+import CollapsibleMarkdown from "../technical/CollapsibleMarkdown";
 const OptionalField = ({ field }) => {
   switch (field.type) {
     case "boolean": {
@@ -20,15 +18,7 @@ const OptionalField = ({ field }) => {
     case "text": {
       return (
         <li className="collection-item">
-          <Collapsible accordion>
-            <CollapsibleItem
-              expanded={false}
-              header={field.name}
-              icon={<Icon>more_horiz</Icon>}
-            >
-              <ReactMarkdown plugins={[gfm]} children={field.value} />
-            </CollapsibleItem>
-          </Collapsible>
+         <CollapsibleMarkdown header={field.name} description={field.value}/>
         </li>
       );
     }

@@ -4,10 +4,9 @@ import { Chip, Icon } from "react-materialize";
 import OptionalField from "./OptionalField";
 const AddItemForm = () => {
   const { newItem, editNewItem, setTags } = useContext(ItemContext);
-
   return (
-    <div className="row">
-      <div className="input-field col s12">
+    <div className="row" style={{ marginTop: "80px" }}>
+      <div className="input-field col s12 m6 offset-m3">
         <input
           value={newItem.title}
           id="item-title"
@@ -18,7 +17,7 @@ const AddItemForm = () => {
         />
         <label htmlFor="item-title">Название</label>
       </div>
-      <div className="input-field col s12">
+      <div className="input-field col s12 m6 offset-m3">
         <Chip
           close={false}
           closeIcon={<Icon className="close">close</Icon>}
@@ -45,7 +44,7 @@ const AddItemForm = () => {
         />
       </div>
       {newItem.optionalFields.map((item, index) => (
-          <OptionalField key={index} item={item} index={index}/>
+        <OptionalField key={index} item={item} index={index} />
       ))}
     </div>
   );

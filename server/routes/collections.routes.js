@@ -6,7 +6,8 @@ const Subjects = require("../models/Subjects");
 const { check, validationResult } = require("express-validator");
 const router = express.Router();
 const { cloudinary } = require("../utils/cloudinary");
-
+const success = { msg: "Успешно" };
+const fail = { msg: "Ошибка сервера" };
 router.get("/user/:id", async (req, res) => {
   try {
     const userId = req.params.id;
@@ -16,7 +17,7 @@ router.get("/user/:id", async (req, res) => {
       .status(201)
       .json({ collections: [...collections], ownerName: user.name });
   } catch (e) {
-    res.status(500).json({ message: "Ошибка сервера" });
+    res.status(500).json(fail);
   }
 });
 router.get("/subjects", async (req, res) => {
@@ -24,7 +25,7 @@ router.get("/subjects", async (req, res) => {
     const subjects = await Subjects.find({}).lean();
     res.status(201).json({ subjects: [...subjects[0].subjects] });
   } catch (e) {
-    res.status(500).json({ message: "Ошибка сервера" });
+    res.status(500).json(fail);
   }
 });
 router.get("/collection/:id", async (req, res) => {
@@ -33,7 +34,7 @@ router.get("/collection/:id", async (req, res) => {
     const items = await Item.find({ collectionId: req.params.id }).lean();
     res.status(201).json({ collection: { ...collection }, items: items });
   } catch (e) {
-    res.status(500).json({ message: "Ошибка сервера" });
+    res.status(500).json(fail);
   }
 });
 router.post(
@@ -48,7 +49,7 @@ router.post(
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({
-          message: errors
+          msg: errors
             .array()
             .map((el) => el.msg)
             .join(". "),
@@ -57,28 +58,30 @@ router.post(
       req.body.optionalFields.forEach((item) => {
         if (item.name === "")
           return res.status(400).json({
-            message: "У всех дополнительных полей должно быть имя",
+            msg: "У всех дополнительных полей должно быть имя",
           });
       });
       const twin = await Collection.findOne({ title: req.body.title });
       if (twin) {
         return res
           .status(400)
-          .json({ message: "Коллекция с таким названием есть" });
+          .json({ msg: "Коллекция с таким названием есть" });
       }
-      const uploadedResponse = await cloudinary.uploader.upload(
-        req.body.image,
-        { upload_preset: "ml_default" }
-      );
       const collection = new Collection({
         ...req.body,
-        pictureId: uploadedResponse.public_id,
       });
+      if (req.body.image) {
+        const uploadedResponse = await cloudinary.uploader.upload(
+          req.body.image,
+          { upload_preset: "ml_default" }
+        );
+        collection.set({ imageId: uploadedResponse.public_id });
+      }
       collection.save();
-      res.status(201).json({ message: "Успешно" });
+      res.status(201).json(success);
     } catch (e) {
       console.log(e.message);
-      res.status(500).json({ message: "Ошибка сервера" });
+      res.status(500).json(fail);
     }
   }
 );
@@ -86,11 +89,43 @@ router.post(
 router.post("/removeCollection", async (req, res) => {
   try {
     const deleted = await Collection.findByIdAndDelete(req.body.id);
-    cloudinary.uploader.destroy(deleted.pictureId);
-    const collections = await Collection.find({ ownerId: req.body.ownerId });
-    res.status(201).json([...collections]);
+    if (!isDefault(req.body.image)) {
+      cloudinary.uploader.destroy(deleted.imageId);
+    }
+    if (req.body.ownerId) {
+      const collections = await Collection.find({ ownerId: req.body.ownerId });
+      res.status(201).json([...collections]);
+    } else res.status(201).json(success);
   } catch (e) {
-    res.status(500).json({ message: "Ошибка сервера" });
+    console.log(e.message);
+    res.status(500).json(fail);
   }
 });
+router.post("/updateCollection", async (req, res) => {
+  const { id, title, description, image, subject, ownerId } = req.body;
+  try {
+    const updateCollection = await Collection.findByIdAndUpdate(id, {
+      title,
+      description,
+      subject,
+    });
+    if (image) {
+      if (!isDefault(updateCollection.imageId)) {
+       cloudinary.uploader.destroy(updateCollection.imageId);
+      }
+      const uploadedResponse = await cloudinary.uploader.upload(image, {
+        upload_preset: "ml_default",
+      });
+     updateCollection.set({ imageId: uploadedResponse.public_id });
+     await updateCollection.save()
+    }
+    const collections = await Collection.find({ownerId: ownerId});
+    res.status(201).json([...collections]);
+  } catch (e) {
+    res.status(500).json(fail);
+  }
+});
+const isDefault = (imageId) => {
+  return imageId === "h34mxfqiv9uwbdvmkmdg";
+};
 module.exports = router;

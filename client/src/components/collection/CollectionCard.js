@@ -1,48 +1,58 @@
 import { React, useState } from "react";
 import { Link } from "react-router-dom";
 import { Icon } from "react-materialize";
-import {
-  Menu,
-  MenuItem,
-  Dialog,
-  DialogActions,
-  DialogTitle,
-  Button,
-} from "@material-ui/core";
+import { Menu, MenuItem } from "@material-ui/core";
 import { useHttp } from "../../hooks/http.hook";
 import { Image } from "cloudinary-react";
+import RemoveAlert from "../technical/RemoveAlert";
+import UpdateCollectionModal from "./UpdateCollectionModal";
 const CollectionCard = ({ collection, setCollections }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [open, setOpen] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [openUpdate, setOpenUpdate] = useState(false);
   const { loading, request } = useHttp();
-  const handleCloseModal = () => {
-    setOpen(false);
-  };
   const handleClickMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleCloseMenu = () => {
     setAnchorEl(null);
   };
-  const handleOpenModal = () => {
-    setOpen(true);
-    setAnchorEl(null);
+  const handleOpenAlert = () => {
+    setOpenAlert(true);
+    handleCloseMenu();
   };
-  const acceptHandler = async () => {
+  const handleOpenEdit = () => {
+    setOpenUpdate(true);
+    handleCloseMenu();
+  };
+  const deleteHandler = async () => {
     try {
       const response = await request(
         "/api/collections/removeCollection",
         "POST",
         { id: collection._id, ownerId: collection.ownerId }
       );
-      setOpen(false);
+      setOpenAlert(false);
       setCollections([...response]);
     } catch (e) {}
+  };
+  const updateHandler = async (update) => {
+    try {
+      const response = await request("/api/collections/updateCollection", "POST", {
+        ...update 
+      });
+      setCollections([...response])
+      setOpenUpdate(false);
+    } catch {}
   };
   return (
     <div className="card col s12 m4 hoverable">
       <div className="card-image">
-        <Image cloudName="dxqkl2we4" height={300} publicId={collection.pictureId}/>
+        <Image
+          cloudName="dxqkl2we4"
+          height={300}
+          publicId={collection.imageId}
+        />
         <button
           aria-controls="menu"
           aria-haspopup="true"
@@ -87,32 +97,22 @@ const CollectionCard = ({ collection, setCollections }) => {
         open={Boolean(anchorEl)}
         onClose={handleCloseMenu}
       >
-        <MenuItem onClick={handleCloseMenu}>Редактировать</MenuItem>
-        <MenuItem onClick={handleOpenModal}>Удалить коллекцию</MenuItem>
+        <MenuItem onClick={handleOpenEdit}>Редактировать</MenuItem>
+        <MenuItem onClick={handleOpenAlert}>Удалить коллекцию</MenuItem>
       </Menu>
-      <Dialog
-        open={open}
-        onClose={handleCloseModal}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          Вы уверены, что хотите удалить коллекцию?
-        </DialogTitle>
-        <DialogActions>
-          <Button
-            onClick={handleCloseModal}
-            disabled={loading}
-            color="primary"
-            autoFocus
-          >
-            Нет
-          </Button>
-          <Button onClick={acceptHandler} disabled={loading} color="primary">
-            Да
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <RemoveAlert
+        open={openAlert}
+        setOpen={setOpenAlert}
+        loading={loading}
+        onAccept={deleteHandler}
+      />
+      <UpdateCollectionModal
+        open={openUpdate}
+        setOpen={setOpenUpdate}
+        collection={collection}
+        updateHandler={updateHandler}
+        loading={loading}
+      />
     </div>
   );
 };

@@ -1,113 +1,127 @@
 @import "~materialize-css/dist/css/materialize.min.css";
-.brand-logo, .nav-link {
-    font-weight: 600;
+.brand-logo,
+.nav-link {
+  font-weight: 600;
 }
 .nav-wrapper {
-    padding: 0 20px;
+  padding: 0 20px;
 }
 .nav-wrapper .switch {
-    margin-right: 10px;
+  margin-right: 10px;
 }
-.avatar-desk  {
-    margin: 10px 0 0 20px;
+.avatar-desk {
+  margin: 10px 0 0 20px;
 }
 .sidenav .switch {
-    margin-left: 30px;
+  margin-left: 30px;
 }
 .switch label .lever {
-    font-size: 16px;
-    vertical-align:super;
+  font-size: 16px;
+  vertical-align: super;
 }
 .sidenav .user-view {
-    padding: 20px 35px;
+  padding: 20px 35px;
 }
 .search-form {
-    margin-left: 200px;
-    max-width: 400px;
+  margin-left: 200px;
+  max-width: 400px;
 }
 .nav-wrapper .search-form .input-field .search {
-    width: 290px;
+  width: 290px;
 }
 .sidenav .input-field .search {
-    margin-left: 35px;
-    width: 200px;
+  margin-left: 35px;
+  width: 200px;
 }
 .switch .material-icons {
-    display: inline;
+  display: inline;
 }
 .material-icons {
-    cursor: pointer;
+  cursor: pointer;
 }
 .dropdown-content {
-    top: -50px;
-    min-width:  200px;
+  top: -50px;
+  min-width: 200px;
 }
 .tag-cloud {
-    min-width: 200px;
-    min-height: 200px;
-    cursor: pointer;
+  min-width: 200px;
+  min-height: 200px;
+  cursor: pointer;
 }
 .auth-form {
-    margin-top: 150px;
-    max-width: 400px;
+  margin-top: 150px;
+  max-width: 400px;
 }
 .content {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 .flat-button:hover {
-    text-decoration: none !important;
+  text-decoration: none !important;
 }
 .progress {
-    margin-top: 250px;
+  margin-top: 250px;
 }
 .card {
-    min-width: 240px;
+  min-width: 240px;
 }
 .card .card-title {
-    font-size: 28px;
-    font-weight: 300;
+  font-size: 28px;
+  font-weight: 300;
 }
 .card .card-content p {
-    margin-left: 5px;
+  margin-left: 5px;
 }
 .input-field .prefix.active {
-    color: #181818;
+  color: #181818;
 }
 .dropzone {
-    cursor: pointer;
-    border: 1px solid #9e9e9e;
-    min-height: 180px;
-    max-height: 300px;
-    border-radius: 5px;
-    margin: 30px 0;
+  cursor: pointer;
+  border: 1px solid #9e9e9e;
+  min-height: 180px;
+  max-height: 300px;
+  border-radius: 5px;
+  margin: 30px 0;
 }
-.dropzone:hover, .blue-border-btn:hover {
-    border: 1px solid #3f51b5;
+.dropzone:hover,
+.blue-border-btn:hover {
+  border: 1px solid #3f51b5;
 }
-.custom-input:focus + label, .input-field>label:not(.label-icon).active, .datepicker-cancel, .datepicker-done {
-    color: #3f51b5 !important;
+.custom-input:focus + label,
+.input-field > label:not(.label-icon).active,
+.datepicker-cancel,
+.datepicker-done {
+  color: #3f51b5 !important;
 }
-.custom-input:focus, #tags:focus, .chips.focus {
-    border-bottom: 1px solid #3f51b5 !important;
-    box-shadow: 0 1px 0 0 #3f51b5 !important;
+.custom-input:focus,
+#tags:focus,
+.chips.focus {
+  border-bottom: 1px solid #3f51b5 !important;
+  box-shadow: 0 1px 0 0 #3f51b5 !important;
 }
-.chip:focus, .datepicker-date-display, .datepicker-table td.is-selected {
-    background-color: #3f51b5;
+.chip:focus,
+.datepicker-date-display,
+.datepicker-table td.is-selected {
+  background-color: #3f51b5;
 }
 .custom-input {
-    font-size: 15px;
-    transition: none !important;
+  font-size: 15px;
+  transition: none !important;
 }
 button:focus {
-    background-color: transparent;
+  background-color: transparent;
 }
-.input-field .custom-input:hover, .custom-input:hover::before {
-    border-bottom: 1px solid #3f51b5 !important;
+.input-field .custom-input:hover,
+.custom-input:hover::before {
+  border-bottom: 1px solid #3f51b5 !important;
 }
-[type="checkbox"]:checked+span:not(.lever):before {
-    border-right: 2px solid #3f51b5;
-    border-bottom: 2px solid #3f51b5;
+[type="checkbox"]:checked + span:not(.lever):before {
+  border-right: 2px solid #3f51b5;
+  border-bottom: 2px solid #3f51b5;
 }
 .comment-avatar {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
+}
+.modal-header {
+  width: 100%;
+  margin-left: 15px !important;
 }
