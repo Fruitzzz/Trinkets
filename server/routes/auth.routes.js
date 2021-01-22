@@ -5,7 +5,8 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const config = require("config");
 const router = express.Router();
-
+const success = { msg: "Успешно" };
+const fail = { msg: "Ошибка сервера" };
 router.post(
   "/signUp",
   [
@@ -20,7 +21,7 @@ router.post(
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({
-          message: errors
+          msg: errors
             .array()
             .map((el) => el.msg)
             .join(". "),
@@ -32,19 +33,19 @@ router.post(
         if (twin.email === email) {
           return res
             .status(400)
-            .json({ message: "Этот email уже зарегистрирован" });
+            .json({ msg: "Этот email уже зарегистрирован" });
         } else {
           return res.status(400).json({
-            message: "Пользователь с таким именем уже зарегистрирован",
+            msg: "Пользователь с таким именем уже зарегистрирован",
           });
         }
       }
       const hashedPassword = await bcrypt.hash(password, 12);
       const user = new User({ name, email, password: hashedPassword });
       await user.save();
-      res.status(201).json({ message: "Регистрация прошла успешно" });
+      res.status(201).json(success);
     } catch (e) {
-      res.status(500).json({ message: "Ошибка сервера" });
+      res.status(500).json(fail);
     }
   }
 );
@@ -52,22 +53,25 @@ router.post("/signIn", [check("name").notEmpty()], async (req, res) => {
   try {
     if (!validationResult(req).isEmpty()) {
       return res.status(400).json({
-        message: "Введите имя",
+        msg: "Введите имя",
       });
     }
     const { name, password } = req.body;
     const user = await User.findOne({ name });
     if (!user) {
-      return res.status(400).json({ message: "Пользователь не найден" });
+      return res.status(400).json({ msg: "Пользователь не найден" });
+    }
+    if(user.isBlocked) {
+      return res.status(400).json({msg: "Пользователь заблокирован"})
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: "Неверный пароль" });
+      return res.status(400).json({ msg: "Неверный пароль" });
     }
     const token = jwt.sign({ userId: user.id }, config.get("jwtSecret"));
-    res.json({ token, userId: user.id, userName: user.name });
+    res.json({ token, userId: user.id, userName: user.name, isAdmin: user.isAdmin });
   } catch (e) {
-    res.status(500).json({ message: "Ошибка сервера" });
+    res.status(500).json(fail);
   }
 });
 module.exports = router;

@@ -10,7 +10,7 @@ const SubjectsPicker = ({value, changeHandler}) => {
     const fetchSubjects = useCallback(async () => {
         try {
           const fetched = await request("/api/collections/subjects");
-          setSubjects(fetched.subjects);
+          setSubjects(fetched);
         } catch (e) {}
       }, [request]);
     

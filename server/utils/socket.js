@@ -21,7 +21,8 @@ const socketConnect = (server) => {
     },
   });
   io.on("connect", (socket) => {
-    socket.on("reqItem", async (itemId) => {
+    socket.on("reqItem", async (itemId) => { 
+      try{
       const item = await Item.findById(itemId).lean();
       const clone = getViewer(socket.id)
       if(clone)
@@ -29,6 +30,10 @@ const socketConnect = (server) => {
       const newViewer = addViewer({ id: socket.id, itemId });
       socket.join(newViewer.itemId);
      socket.emit("resItem", item);
+      }
+      catch(e) {
+        socket.emit("invalidItem");
+      }
     });
 
     socket.on("addComment", async (comment) => {

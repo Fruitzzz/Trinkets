@@ -1,4 +1,4 @@
-import { React, useState} from "react";
+import { React, useState } from "react";
 import {
   Dialog,
   AppBar,
@@ -10,10 +10,16 @@ import {
 import { Icon, TextInput, Textarea } from "react-materialize";
 import Dropzone from "../technical/Dropzone";
 import SubjectsPicker from "../technical/SubjectsPicker";
-const UpdateCollectionModal = ({ collection, open, setOpen, updateHandler, loading}) => {
+const UpdateCollectionModal = ({
+  collection,
+  open,
+  setOpen,
+  updateHandler,
+  loading,
+}) => {
   const [update, setUpdate] = useState({
     id: collection._id,
-    ownerId: collection.ownerId, 
+    ownerId: collection.ownerId,
     title: collection.title,
     description: collection.description,
     subject: collection.subject,

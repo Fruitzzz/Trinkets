@@ -22,9 +22,11 @@ router.get("/user/:id", async (req, res) => {
 });
 router.get("/subjects", async (req, res) => {
   try {
-    const subjects = await Subjects.find({}).lean();
-    res.status(201).json({ subjects: [...subjects[0].subjects] });
+    const subjects = await Subjects.find();
+    const subjectsNames = subjects.map(subject => subject.name)
+    res.status(201).json([...subjectsNames]);
   } catch (e) {
+    console.log(e.message);
     res.status(500).json(fail);
   }
 });

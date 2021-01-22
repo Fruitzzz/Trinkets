@@ -71,8 +71,8 @@
 .card .card-content p {
   margin-left: 5px;
 }
-.input-field .prefix.active {
-  color: #181818;
+.input-field .prefix.active, .MuiIconButton-root {
+  color: #181818 !important;
 }
 .dropzone {
   cursor: pointer;

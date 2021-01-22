@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Link as FlatButton } from "@material-ui/core";
 import { UserContext } from "../../context/user.context";
 const MenuBar = () => {
-  const { logout, user, isAuthenticated } = useContext(UserContext);
+  const { logout, user } = useContext(UserContext);
   return (
     <nav>
       <div className="nav-wrapper white z-depth-3">
@@ -30,7 +30,7 @@ const MenuBar = () => {
             </div>
           </li>
           <li>
-            {isAuthenticated ? (
+            {user.isAuthenticated ? (
               <Link
                 className="blue-grey-text text-darken-2 nav-link"
                 to="/"
@@ -48,7 +48,7 @@ const MenuBar = () => {
             )}
           </li>
           <li>
-            {isAuthenticated ? (
+            {user.isAuthenticated ? (
               <Dropdown
                 trigger={
                   <Avatar className=" avatar avatar-desk indigo darken-1">
@@ -63,6 +63,17 @@ const MenuBar = () => {
                   <Icon className="blue-grey-text text-darken-2">favorite</Icon>
                   Моя коллекция
                 </Link>
+                {user.isAdmin && (
+                  <Link
+                    className="blue-grey-text text-darken-2 nav-link"
+                    to="/admin"
+                  >
+                    <Icon className="blue-grey-text text-darken-2">
+                    stars
+                    </Icon>
+                    Админ
+                  </Link>
+                )}
                 <FlatButton className="blue-grey-text text-darken-2 nav-link flat-button">
                   <Icon className="blue-grey-text text-darken-2">language</Icon>
                   Английский
@@ -90,7 +101,7 @@ const MenuBar = () => {
           </div>
         </form>
       </div>
-      <MobileMenu isAuth={isAuthenticated} />
+      <MobileMenu />
     </nav>
   );
 };

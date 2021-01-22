@@ -17,7 +17,6 @@ export const useItem = () => {
   };
 
   const setTags = (tags) => {
-    console.log(tags);
     setNewItem({ ...newItem, tags: tags });
   };
 

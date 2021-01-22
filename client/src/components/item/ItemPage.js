@@ -20,10 +20,8 @@ const ItemPage = () => {
   const fetchItem = useCallback(async () => {
     try {
       await socket.emit("reqItem", params.id);
-    } catch (e) {
-      history.push("/notFound");
-    }
-  }, [params.id, socket, history]);
+    } catch (e) {}
+  }, [params.id, socket]);
   const deleteHandler = async () => {
     try {
       await request("/api/items/removeItem", "POST", { itemId: item._id });
@@ -31,19 +29,22 @@ const ItemPage = () => {
     } catch (e) {}
   };
   const updateHandler = async (update) => {
-    try{
+    try {
       const response = await request("/api/items/updateItem", "POST", {
-        ...update
+        ...update,
       });
-      console.log(item, {...response});
-      setItem({...response});
+      setItem({ ...response });
       setOpenUpdate(false);
-    } catch(e) {}
-  }
+    } catch (e) {}
+  };
   useEffect(() => {
     fetchItem();
   }, [fetchItem]);
-
+  useEffect(() => {
+    socket.on("invalidItem", () => {
+      history.push("/notFound");
+    })
+  })
   useEffect(() => {
     socket.on("resItem", (fetched) => {
       setItem(fetched);
@@ -91,8 +92,18 @@ const ItemPage = () => {
       {item.comments.reverse().map((comment, index) => (
         <Comment key={index} comment={comment} />
       ))}
-      <EditFAB deleteHandler={deleteHandler} loading={loading} updateHandler={setOpenUpdate}/>
-      <UpdateItemModal item={item} open={openUpdate} setOpen={setOpenUpdate} updateHandler={updateHandler} loading={loading}/>
+      <EditFAB
+        deleteHandler={deleteHandler}
+        loading={loading}
+        updateHandler={setOpenUpdate}
+      />
+      <UpdateItemModal
+        item={item}
+        open={openUpdate}
+        setOpen={setOpenUpdate}
+        updateHandler={updateHandler}
+        loading={loading}
+      />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 const {Schema, model} = require("mongoose");
 
 const schema = new Schema({
-    subjects: {type: [String], default: []}
+    name: {type: String, required: true}
 })
 
 module.exports = model("Subjects", schema);

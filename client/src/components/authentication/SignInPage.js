@@ -23,7 +23,7 @@ const SignInPage = () => {
   const signInHandler = async () => {
     try {
       const data = await request("/api/auth/signIn", "POST", { ...form });
-      user.signIn(data.token, data.userId, data.userName)
+      user.signIn(data.token, data.userId, data.userName, data.isAdmin)
       history.push("/");
     } catch (e) {}
   };

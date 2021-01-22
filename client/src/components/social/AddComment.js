@@ -16,6 +16,7 @@ const AddComment = ({ socket }) => {
   const clickHandler = () => {
     if (comment.text.trim().length !== 0) socket.emit("addComment", comment);
     else message("Введите текст комментария");
+    setComment({...comment, text: ""});
   };
   return (
     <div className="input-field col s12 m8 offset-m2">
