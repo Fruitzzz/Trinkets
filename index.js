@@ -11,9 +11,10 @@ app.use("/api/auth", require("./routes/auth.routes"));
 app.use("/api/collections", require("./routes/collections.routes"));
 app.use("/api/items", require("./routes/items.routes"));
 app.use("/api/admin", require("./routes/admin.routes"));
+if(process.env.NODE_ENV === 'production') {
+  app.use('/', express.static('client/build'))
+}
 socketConnect(server);
-
-
 const start = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI || config.get("mongoUri"), {

@@ -10,8 +10,12 @@ import AddComment from "../social/AddComment";
 import LikeSection from "../social/LikeSection";
 import EditFAB from "../technical/EditFAB";
 import UpdateItemModal from "./ItemUpdateModal";
+import { useCommon } from "../../hooks/common.hook";
+import { UserContext } from "../../context/user.context";
 const ItemPage = () => {
+  const { isOwner } = useCommon();
   const socket = useContext(SocketContext);
+  const { user } = useContext(UserContext);
   const { request, loading } = useHttp();
   const history = useHistory();
   const params = useParams();
@@ -43,8 +47,8 @@ const ItemPage = () => {
   useEffect(() => {
     socket.on("invalidItem", () => {
       history.push("/notFound");
-    })
-  })
+    });
+  });
   useEffect(() => {
     socket.on("resItem", (fetched) => {
       setItem(fetched);
@@ -88,15 +92,17 @@ const ItemPage = () => {
         </ul>
       </div>
       <LikeSection likes={item.likes} socket={socket} />
-      <AddComment socket={socket} />
+      {user.isAuthenticated && <AddComment socket={socket} />}
       {item.comments.reverse().map((comment, index) => (
         <Comment key={index} comment={comment} />
       ))}
-      <EditFAB
-        deleteHandler={deleteHandler}
-        loading={loading}
-        updateHandler={setOpenUpdate}
-      />
+      {isOwner(item.ownerId) && (
+        <EditFAB
+          deleteHandler={deleteHandler}
+          loading={loading}
+          updateHandler={setOpenUpdate}
+        />
+      )}
       <UpdateItemModal
         item={item}
         open={openUpdate}

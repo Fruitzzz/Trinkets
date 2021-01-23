@@ -1,24 +1,27 @@
-import { React, useCallback, useEffect, useState } from "react";
+import { React, useCallback, useEffect, useState, useContext } from "react";
 import { useParams, useHistory, Link } from "react-router-dom";
 import Loader from "../technical/Loader";
 import { useHttp } from "../../hooks/http.hook";
 import CollectionCard from "./CollectionCard";
 import { Icon } from "react-materialize";
+import { useCommon } from "../../hooks/common.hook";
+import { CommonContext } from "../../context/common.context";
 const UserPage = () => {
   const history = useHistory();
+  const { isOwner } = useCommon();
   const [collections, setCollections] = useState(null);
-  const [owner, setOwner] = useState(null);
   const params = useParams();
   const { request } = useHttp();
+  const { setOpenedUser, openedUser } = useContext(CommonContext);
   const fetchCollections = useCallback(async () => {
     try {
       const fetched = await request(`/api/collections/user/${params.id}`);
+      setOpenedUser({ id: fetched.ownerId, name: fetched.ownerName });
       setCollections(fetched.collections);
-      setOwner(fetched.ownerName);
     } catch (e) {
       history.push("/notFound");
     }
-  }, [request, params.id, history]);
+  }, [request, params.id, history, setOpenedUser]);
   useEffect(() => {
     fetchCollections();
   }, [fetchCollections]);
@@ -28,17 +31,19 @@ const UserPage = () => {
   return (
     <div className="row content">
       <div className="col s12" style={{ fontSize: "24px" }}>
-        <div className="fixed-action-btn">
-          <Link
-            to="/addCollection"
-            className="btn-floating btn-large indigo darken-1"
-          >
-            <Icon>add</Icon>
-          </Link>
-        </div>
+        {isOwner(openedUser.id) && (
+          <div className="fixed-action-btn">
+            <Link
+              to="/addCollection"
+              className="btn-floating btn-large indigo darken-1"
+            >
+              <Icon>add</Icon>
+            </Link>
+          </div>
+        )}
       </div>
       <div className="col s12">
-        <h3>{`Страница пользователя ${owner}`}</h3>
+        <h3>{`Страница пользователя ${openedUser.name}`}</h3>
         {!!collections.length ? (
           collections.map((item, index) => (
             <CollectionCard

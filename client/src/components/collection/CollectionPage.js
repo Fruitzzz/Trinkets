@@ -9,7 +9,9 @@ import ItemsSection from "../item/ItemsSection";
 import CollapsibleMarkdown from "../technical/CollapsibleMarkdown";
 import EditFAB from "../technical/EditFAB";
 import UpdateCollectionModal from "../collection/UpdateCollectionModal";
+import { useCommon } from "../../hooks/common.hook";
 const CollectionPage = () => {
+  const { isOwner } = useCommon();
   const { request, loading } = useHttp();
   const history = useHistory();
   const params = useParams();
@@ -51,11 +53,17 @@ const CollectionPage = () => {
   };
   const updateHandler = async (update) => {
     try {
-      const response = await request("/api/collections/updateCollection", "POST", {
-        ...update 
-      });
-     const currentCollection =  response.find(item => item._id === collection._id)
-      setCollection(currentCollection)
+      const response = await request(
+        "/api/collections/updateCollection",
+        "POST",
+        {
+          ...update,
+        }
+      );
+      const currentCollection = response.find(
+        (item) => item._id === collection._id
+      );
+      setCollection(currentCollection);
       setOpenUpdate(false);
     } catch {}
   };
@@ -67,6 +75,7 @@ const CollectionPage = () => {
           collectionTitle: collection.title,
           collectionId: collection._id,
           optionalFields: collection.optionalFields,
+          ownerId: collection.ownerId,
         },
         items,
         editNewItem,
@@ -109,8 +118,16 @@ const CollectionPage = () => {
           <ItemsSection />
         </div>
       </div>
-      <EditFAB deleteHandler={deleteHandler} updateHandler={setOpenUpdate}/>
-      <UpdateCollectionModal collection={collection} open={openUpdate} setOpen={setOpenUpdate} updateHandler={updateHandler} loading={loading}/>
+      {isOwner(collection.ownerId) && (
+        <EditFAB deleteHandler={deleteHandler} updateHandler={setOpenUpdate} />
+      )}
+      <UpdateCollectionModal
+        collection={collection}
+        open={openUpdate}
+        setOpen={setOpenUpdate}
+        updateHandler={updateHandler}
+        loading={loading}
+      />
     </ItemContext.Provider>
   );
 };

@@ -1,10 +1,10 @@
 import { useState, useContext } from "react";
-import { UserContext } from "../context/user.context";
+import { CommonContext } from "../context/common.context";
 export const useCollection = () => {
-  const { user } = useContext(UserContext);
+  const { openedUser } = useContext(CommonContext);
   const [collection, setCollection] = useState({
-    ownerName: user.name,
-    ownerId: user.id,
+    ownerName: openedUser.name,
+    ownerId: openedUser.id,
     title: "",
     description: "",
     subject: "",

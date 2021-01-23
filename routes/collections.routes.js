@@ -15,7 +15,7 @@ router.get("/user/:id", async (req, res) => {
     const user = await User.findById(userId);
     res
       .status(201)
-      .json({ collections: [...collections], ownerName: user.name });
+      .json({ collections: [...collections], ownerName: user.name, ownerId: user._id });
   } catch (e) {
     res.status(500).json(fail);
   }

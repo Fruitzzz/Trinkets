@@ -6,6 +6,7 @@ const schema = new Schema({
   optionalFields: { type: [], default: null },
   collectionTitle: { type: String, required: true },
   collectionId: { type: Types.ObjectId, ref: "Collection" },
+  ownerId: {type: Types.ObjectId, ref:"User"},
   likes: {type: [Types.ObjectId], default: []},
   comments: {type: [], default: []},
   creationDate: {type: Date, default: Date.now()}

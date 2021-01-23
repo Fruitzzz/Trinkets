@@ -6,13 +6,20 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { useUser } from "./hooks/user.hook";
 import { UserContext } from "./context/user.context";
 import {useRoutes} from "./Routes";
+import { CommonContext } from "./context/common.context";
+import {useCommon} from "./hooks/common.hook";
 const App = () => {
   useEffect(() => {
     window.M.AutoInit();
   });
   const { user, signIn, logout} = useUser();
+  const {openedUser, openUserHandler} = useCommon();
   const routes = useRoutes(user);
   return (
+    <CommonContext.Provider value={{
+      openedUser,
+      setOpenedUser: openUserHandler
+    }}>
     <UserContext.Provider value={{
       signIn, logout, user
     }}>
@@ -27,6 +34,7 @@ const App = () => {
         </div>
       </Router>
     </UserContext.Provider>
+    </CommonContext.Provider>
   );
 };
 

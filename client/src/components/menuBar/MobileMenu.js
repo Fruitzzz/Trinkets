@@ -6,10 +6,10 @@ import {Link as FlatButton} from "@material-ui/core";
 import { Icon } from "react-materialize";
 import {UserContext} from "../../context/user.context";
 const MobileMenu = () => {
-  const {logout, user, isAuthenticated} = useContext(UserContext);
+  const {logout, user} = useContext(UserContext);
   return (
     <ul className="sidenav" id="mobile">
-      {isAuthenticated && (
+      {user.isAuthenticated && (
       <li>
         <div className="user-view">
           <div className="background">
@@ -32,7 +32,7 @@ const MobileMenu = () => {
         </div>
       </li>
       <li>
-        {isAuthenticated ? (
+        {user.isAuthenticated ? (
           <Link className="blue-grey-text text-darken-2 sidenav-close" to={`/profile/${user.id}`}>
             <Icon className="blue-grey-text text-darken-2">favorite</Icon>
             Моя коллекция
@@ -44,7 +44,7 @@ const MobileMenu = () => {
         )}
       </li>
       <li>
-        {isAuthenticated ? (
+        {user.isAuthenticated ? (
           <Link className="blue-grey-text text-darken-2 nav-link sidenav-close" to="/" onClick={logout}>Выход</Link>
         ) : (
           <Link className="blue-grey-text text-darken-2 nav-link sidenav-close" to="/signUp">

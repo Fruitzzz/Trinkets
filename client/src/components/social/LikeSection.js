@@ -1,10 +1,17 @@
 import { React, useContext } from "react";
 import { Icon } from "react-materialize";
 import { UserContext } from "../../context/user.context";
+import {useMessage} from "../../hooks/message.hook";
 const LikeSection = ({ likes, socket }) => {
+  const message = useMessage();
   const { user } = useContext(UserContext);
   const clickHandler = () => {
+    if(user.isAuthenticated) {
     socket.emit("like", user.id);
+    }
+    else {
+      message("Необходима авторизация");
+    }
   };
   return (
     <div className="col s12 m8 offset-m2">

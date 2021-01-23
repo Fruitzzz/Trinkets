@@ -6,7 +6,9 @@ import { useHttp } from "../../hooks/http.hook";
 import { Image } from "cloudinary-react";
 import RemoveAlert from "../technical/RemoveAlert";
 import UpdateCollectionModal from "./UpdateCollectionModal";
+import { useCommon } from "../../hooks/common.hook";
 const CollectionCard = ({ collection, setCollections }) => {
+  const { isOwner } = useCommon();
   const [anchorEl, setAnchorEl] = useState(null);
   const [openAlert, setOpenAlert] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
@@ -38,10 +40,14 @@ const CollectionCard = ({ collection, setCollections }) => {
   };
   const updateHandler = async (update) => {
     try {
-      const response = await request("/api/collections/updateCollection", "POST", {
-        ...update 
-      });
-      setCollections([...response])
+      const response = await request(
+        "/api/collections/updateCollection",
+        "POST",
+        {
+          ...update,
+        }
+      );
+      setCollections([...response]);
       setOpenUpdate(false);
     } catch {}
   };
@@ -53,14 +59,16 @@ const CollectionCard = ({ collection, setCollections }) => {
           height={300}
           publicId={collection.imageId}
         />
-        <button
-          aria-controls="menu"
-          aria-haspopup="true"
-          onClick={handleClickMenu}
-          className="btn-floating halfway-fab waves-effect waves-light  indigo darken-1"
-        >
-          <Icon>build</Icon>
-        </button>
+        {isOwner(collection.ownerId) && (
+          <button
+            aria-controls="menu"
+            aria-haspopup="true"
+            onClick={handleClickMenu}
+            className="btn-floating halfway-fab waves-effect waves-light  indigo darken-1"
+          >
+            <Icon>build</Icon>
+          </button>
+        )}
       </div>
       <div className="card-content">
         <span className="card-title">{collection.title}</span>

@@ -7,6 +7,7 @@ export const useItem = () => {
     optionalFields: [],
     collectionTitle: null,
     collectionId: null,
+    ownerId: null,
   });
 
   const [items, setItems] = useState([]);
