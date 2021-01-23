@@ -7,7 +7,7 @@ import { Image } from "cloudinary-react";
 import RemoveAlert from "../technical/RemoveAlert";
 import UpdateCollectionModal from "./UpdateCollectionModal";
 import { useCommon } from "../../hooks/common.hook";
-const CollectionCard = ({ collection, setCollections }) => {
+const CollectionCard = ({ collection, setCollections, readOnly }) => {
   const { isOwner } = useCommon();
   const [anchorEl, setAnchorEl] = useState(null);
   const [openAlert, setOpenAlert] = useState(false);
@@ -59,7 +59,7 @@ const CollectionCard = ({ collection, setCollections }) => {
           height={300}
           publicId={collection.imageId}
         />
-        {isOwner(collection.ownerId) && (
+        {isOwner(collection.ownerId) && !readOnly && (
           <button
             aria-controls="menu"
             aria-haspopup="true"

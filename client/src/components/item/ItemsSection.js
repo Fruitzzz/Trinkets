@@ -17,7 +17,7 @@ const ItemsSection = () => {
       <div className="col s12">
         <ul className="collection">
           {items.map((item, index) => (
-            <Item key={index} item={item} index={index} />
+            <Item key={index} item={item} index={index}/>
           ))}
         </ul>
       </div>

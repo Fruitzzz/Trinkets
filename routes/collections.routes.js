@@ -15,7 +15,11 @@ router.get("/user/:id", async (req, res) => {
     const user = await User.findById(userId);
     res
       .status(201)
-      .json({ collections: [...collections], ownerName: user.name, ownerId: user._id });
+      .json({
+        collections: [...collections],
+        ownerName: user.name,
+        ownerId: user._id,
+      });
   } catch (e) {
     res.status(500).json(fail);
   }
@@ -23,10 +27,9 @@ router.get("/user/:id", async (req, res) => {
 router.get("/subjects", async (req, res) => {
   try {
     const subjects = await Subjects.find();
-    const subjectsNames = subjects.map(subject => subject.name)
+    const subjectsNames = subjects.map((subject) => subject.name);
     res.status(201).json([...subjectsNames]);
   } catch (e) {
-    console.log(e.message);
     res.status(500).json(fail);
   }
 });
@@ -36,6 +39,26 @@ router.get("/collection/:id", async (req, res) => {
     const items = await Item.find({ collectionId: req.params.id }).lean();
     res.status(201).json({ collection: { ...collection }, items: items });
   } catch (e) {
+    res.status(500).json(fail);
+  }
+});
+router.get("/biggestCollections", async (req, res) => {
+  try {
+    const items = await Item.aggregate([
+      { $group: { _id: "$collectionId", count: { $sum: 1 } } },
+    ])
+      .sort({ count: "desc" })
+      .limit(3);
+    const collections = await Collection.find({
+      $or: [
+        { _id: items[0]._id },
+        { _id: items[1]._id },
+        { _id: items[2]._id },
+      ],
+    });
+    res.status(201).json([...collections]);
+  } catch (e) {
+    console.log(e.message);
     res.status(500).json(fail);
   }
 });
@@ -82,7 +105,6 @@ router.post(
       collection.save();
       res.status(201).json(success);
     } catch (e) {
-      console.log(e.message);
       res.status(500).json(fail);
     }
   }
@@ -99,7 +121,6 @@ router.post("/removeCollection", async (req, res) => {
       res.status(201).json([...collections]);
     } else res.status(201).json(success);
   } catch (e) {
-    console.log(e.message);
     res.status(500).json(fail);
   }
 });
@@ -113,15 +134,15 @@ router.post("/updateCollection", async (req, res) => {
     });
     if (image) {
       if (!isDefault(updateCollection.imageId)) {
-       cloudinary.uploader.destroy(updateCollection.imageId);
+        cloudinary.uploader.destroy(updateCollection.imageId);
       }
       const uploadedResponse = await cloudinary.uploader.upload(image, {
         upload_preset: "ml_default",
       });
-     updateCollection.set({ imageId: uploadedResponse.public_id });
-     await updateCollection.save()
+      updateCollection.set({ imageId: uploadedResponse.public_id });
+      await updateCollection.save();
     }
-    const collections = await Collection.find({ownerId: ownerId});
+    const collections = await Collection.find({ ownerId: ownerId });
     res.status(201).json([...collections]);
   } catch (e) {
     res.status(500).json(fail);

@@ -1,15 +1,14 @@
 import { React, useContext } from "react";
 import { Icon, Chip } from "react-materialize";
 import { Link } from "react-router-dom";
+import { useCommon } from "../../hooks/common.hook";
 import { useHttp } from "../../hooks/http.hook";
 import { ItemContext } from "../../context/item.context";
-import { useCommon } from "../../hooks/common.hook";
-const Item = ({ item }) => {
+const Item = ({ item, readOnly}) => {
   const { isOwner } = useCommon();
   const { request } = useHttp();
-  const { setItems } = useContext(ItemContext);
-
-  const removeClickHandler = async () => {
+  const {setItems} = useContext(ItemContext);
+  const removeHandler = async (item) => {
     const response = await request("/api/items/removeItem", "POST", {
       itemId: item._id,
       collectionId: item.collectionId,
@@ -30,10 +29,10 @@ const Item = ({ item }) => {
         ))}
       </div>
       <p>{`Дата добавления: ${item.creationDate.slice(0, 10)}`}</p>
-      {isOwner(item.ownerId) && (
+      {isOwner(item.ownerId) && !readOnly && (
         <Icon
           className="secondary-content blue-grey-text text-darken-2"
-          onClick={removeClickHandler}
+          onClick={removeHandler}
         >
           highlight_off
         </Icon>
