@@ -3,6 +3,9 @@
 .nav-link {
   font-weight: 600;
 }
+body {
+  background-color: #181818 !important;
+}
 .nav-wrapper {
   padding: 0 20px;
 }

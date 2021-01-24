@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import {Link as FlatButton} from "@material-ui/core";
 import { Icon } from "react-materialize";
 import {UserContext} from "../../context/user.context";
+import SearchForm from "../search/SearchForm";
 const MobileMenu = () => {
   const {logout, user} = useContext(UserContext);
   return (
@@ -22,14 +23,7 @@ const MobileMenu = () => {
       </li>)
 }
       <li>
-        <div className="input-field">
-          <input
-            className="search"
-            type="search"
-            placeholder="Начните печатать.."
-          />
-          <Icon className="blue-grey-text text-darken-2 sidenav-close">search</Icon>
-        </div>
+        <SearchForm/>
       </li>
       <li>
         {user.isAuthenticated ? (

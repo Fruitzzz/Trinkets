@@ -5,4 +5,5 @@ export const CommonContext = createContext({
   language: null,
   openedUser: null,
   setOpenedUser: () => {},
+  swapTheme: () => {},
 });

@@ -13,12 +13,14 @@ const App = () => {
     window.M.AutoInit();
   });
   const { user, signIn, logout} = useUser();
-  const {openedUser, openUserHandler} = useCommon();
+  const {openedUser, openUserHandler, swapTheme, theme} = useCommon();
   const routes = useRoutes(user);
   return (
     <CommonContext.Provider value={{
       openedUser,
-      setOpenedUser: openUserHandler
+      setOpenedUser: openUserHandler,
+      theme,
+      swapTheme
     }}>
     <UserContext.Provider value={{
       signIn, logout, user
@@ -26,11 +28,9 @@ const App = () => {
       <Router>
         <div className="App">
           <MenuBar />
-          <main>
             <div className="container">
               {routes}
             </div>
-          </main>
         </div>
       </Router>
     </UserContext.Provider>

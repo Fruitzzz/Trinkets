@@ -5,8 +5,10 @@ import { Dropdown, Icon } from "react-materialize";
 import { Link } from "react-router-dom";
 import { Link as FlatButton } from "@material-ui/core";
 import { UserContext } from "../../context/user.context";
+import SearchForm from "../search/SearchForm";
 const MenuBar = () => {
   const { logout, user } = useContext(UserContext);
+
   return (
     <nav>
       <div className="nav-wrapper white z-depth-3">
@@ -68,9 +70,7 @@ const MenuBar = () => {
                     className="blue-grey-text text-darken-2 nav-link"
                     to="/admin"
                   >
-                    <Icon className="blue-grey-text text-darken-2">
-                    stars
-                    </Icon>
+                    <Icon className="blue-grey-text text-darken-2">stars</Icon>
                     Админ
                   </Link>
                 )}
@@ -90,15 +90,7 @@ const MenuBar = () => {
           </li>
         </ul>
         <form className=" hide-on-med-and-down search-form">
-          <div className="input-field">
-            <input
-              id="search"
-              type="search"
-              className="search"
-              placeholder="Начните печатать"
-            />
-            <Icon className="blue-grey-text text-darken-2">search</Icon>
-          </div>
+          <SearchForm />
         </form>
       </div>
       <MobileMenu />

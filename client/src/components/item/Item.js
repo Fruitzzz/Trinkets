@@ -4,16 +4,21 @@ import { Link } from "react-router-dom";
 import { useCommon } from "../../hooks/common.hook";
 import { useHttp } from "../../hooks/http.hook";
 import { ItemContext } from "../../context/item.context";
-const Item = ({ item, readOnly}) => {
+import {useHistory} from "react-router-dom"
+const Item = ({ item, readOnly }) => {
   const { isOwner } = useCommon();
   const { request } = useHttp();
-  const {setItems} = useContext(ItemContext);
-  const removeHandler = async (item) => {
+  const { setItems } = useContext(ItemContext);
+  const history = useHistory();
+  const removeHandler = async () => {
     const response = await request("/api/items/removeItem", "POST", {
       itemId: item._id,
       collectionId: item.collectionId,
     });
-    setItems([...response]);
+    setItems(response);
+  };
+  const onChipClick = (event) => {
+    history.push(`/search/${event.target.innerHTML}`);
   };
   return (
     <li className="collection-item avatar">
@@ -21,11 +26,22 @@ const Item = ({ item, readOnly}) => {
         <Icon className="circle">attach_file</Icon>
       </Link>
       <span className="title">{`Название: ${item.title}`}</span>
-      <p>{`Коллекция: ${item.collectionTitle}`}</p>
+      <p>
+        {"Коллекция: "}
+        <Link
+          className=" indigo-text text-darken-4
+"
+          to={`/collection/${item.collectionId}`}
+        >
+          {item.collectionTitle}
+        </Link>
+      </p>
       <div>
-        {`Теги: `}
+        {"Теги: "}
         {item.tags.map((tag, index) => (
-          <Chip key={index}>{tag.tag}</Chip>
+          <Chip name={tag.tag} key={index} onClick={onChipClick} style={{cursor: "pointer"}}>
+            {tag.tag}
+          </Chip>
         ))}
       </div>
       <p>{`Дата добавления: ${item.creationDate.slice(0, 10)}`}</p>

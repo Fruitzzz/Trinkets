@@ -73,18 +73,13 @@ const CollectionCard = ({ collection, setCollections, readOnly }) => {
       <div className="card-content">
         <span className="card-title">{collection.title}</span>
         <p>
-          Type:
-          <Link
-            className="blue-grey-text text-darken-2"
-            to={`/profile/${collection.ownerId}`}
-          >
-            {` ${collection.subject}`}
-          </Link>
+          Тема:
+          {` ${collection.subject}`}
         </p>
         <p>
-          Author:
+          Автор:
           <Link
-            className="blue-grey-text text-darken-2"
+            className="indigo-text text-darken-4"
             to={`/profile/${collection.ownerId}`}
           >
             {` ${collection.ownerName}`}

@@ -1,4 +1,5 @@
 import {React, useState} from "react";
+import {Link} from "react-router-dom";
 import { Icon } from "react-materialize";
 import { Tooltip, IconButton } from "@material-ui/core";
 import { useHttp } from "../../hooks/http.hook";
@@ -17,15 +18,14 @@ const UserTools = ({user, setUsers}) => {
     const openAlert = () => {
         setOpen(true);
     }
-    const viewUserHandler = () => {
-
-    }
     return (
         <td>
         <Tooltip arrow title="Перейти в профиль">
-          <IconButton onClick={viewUserHandler} disabled={loading}>
+          <Link to={`/profile/${user._id}`} disabled={loading}>
+          <IconButton>
             <Icon>assignment_ind</Icon>
           </IconButton>
+          </Link>
         </Tooltip>
         <Tooltip arrow title="Заблокировать">
         <IconButton onClick={blockHandler} disabled={loading}>

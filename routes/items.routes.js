@@ -81,4 +81,13 @@ router.post("/updateItem", async (req, res) => {
     res.status(500).json(fail);
   }
 });
+router.get("/search/:searchText", async (req, res) => {
+  try{
+  const result = await Item.fuzzySearch(req.params.searchText);
+  res.status(201).json(result);
+  }
+  catch(e) {
+    res.status(500).json(fail);
+  }
+})
 module.exports = router;

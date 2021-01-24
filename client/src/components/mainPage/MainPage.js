@@ -1,15 +1,15 @@
-import { React, useState, useEffect, useCallback } from "react";
+import { React, useState, useEffect, useCallback, useContext } from "react";
 import { useHttp } from "../../hooks/http.hook";
 import Cloud from "./Cloud";
 import CollectionCard from "../collection/CollectionCard";
 import Item from "../item/Item";
 import Loader from "../technical/Loader";
-
+import {CommonContext} from "../../context/common.context"
 const MainPage = () => {
   const { request } = useHttp();
   const [collections, setCollections] = useState(null);
   const [items, setItems] = useState(null);
-
+  const {theme} = useContext(CommonContext)
   const fetchCollections = useCallback(async () => {
     try {
       const fetched = await request("/api/collections/biggestCollections");
@@ -47,6 +47,9 @@ const MainPage = () => {
             <Item key={index} item={item} readOnly />
           ))}
         </ul>
+        <button onClick={() => {
+          console.log(theme);
+        }}>fdasfs</button>
       </div>
     </div>
   );

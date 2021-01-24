@@ -9,6 +9,7 @@ import AddCollPage from "./components/addCollection/AddCollPage";
 import CollectionPage from "./components/collection/CollectionPage";
 import ItemPage from "./components/item/ItemPage";
 import AdminPage from "./components/admin/AdminPage";
+import SearchPage from "./components/search/SearchPage";
 export const useRoutes = (user) => {
   if (user.isAuthenticated) {
     return (
@@ -19,6 +20,7 @@ export const useRoutes = (user) => {
         <Route path="/notFound" component={NotFound} />
         <Route path="/addCollection" component={AddCollPage} />
         <Route path="/item/:id" component={ItemPage} />
+        <Route path="/search/:searchText" component={SearchPage}/>
         {user.isAdmin && <Route path="/admin" component={AdminPage} />}
       </Switch>
     );
@@ -32,6 +34,7 @@ export const useRoutes = (user) => {
       <Route path="/notFound" component={NotFound} />
       <Route path="/profile/:id" component={UserPage} />
       <Route path="/item/:id" component={ItemPage} />
+      <Route path="/search/:searchText" component={SearchPage}/>
       <Redirect to="/" />
     </Switch>
   );
