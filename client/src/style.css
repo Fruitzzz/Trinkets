@@ -3,9 +3,6 @@
 .nav-link {
   font-weight: 600;
 }
-body {
-  background-color: #181818 !important;
-}
 .nav-wrapper {
   padding: 0 20px;
 }
@@ -22,6 +19,10 @@ body {
   font-size: 16px;
   vertical-align: super;
 }
+.switch label input[type=checkbox]:checked+.lever,
+.switch label input[type=checkbox]:checked+.lever:after {
+  background-color: #3f51b5;
+}
 .sidenav .user-view {
   padding: 20px 35px;
 }
@@ -30,9 +31,12 @@ body {
   max-width: 400px;
 }
 .nav-wrapper .search-form .input-field .search {
+  margin-left: 25px;
   width: 290px;
+  padding-left: 20px;
 }
 .sidenav .input-field .search {
+  padding-left: 10px;
   margin-left: 35px;
   width: 200px;
 }
@@ -73,9 +77,6 @@ body {
 }
 .card .card-content p {
   margin-left: 5px;
-}
-.input-field .prefix.active, .MuiIconButton-root {
-  color: #181818 !important;
 }
 .dropzone {
   cursor: pointer;
@@ -127,4 +128,7 @@ button:focus {
 .modal-header {
   width: 100%;
   margin-left: 15px !important;
+}
+.comment-author {
+  font-size: 20px;
 }

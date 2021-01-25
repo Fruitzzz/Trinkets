@@ -1,11 +1,12 @@
 import {React, useContext} from "react";
-import Avatar from "@material-ui/core/Avatar";
-import background from "../../images/UserBackground.jpg";
-import { Link } from "react-router-dom";
-import {Link as FlatButton} from "@material-ui/core";
 import { Icon } from "react-materialize";
 import {UserContext} from "../../context/user.context";
+import { Link } from "react-router-dom";
+import {Link as FlatButton} from "@material-ui/core";
+import Avatar from "@material-ui/core/Avatar";
+import background from "../../images/UserBackground.jpg";
 import SearchForm from "../search/SearchForm";
+import SwitchTheme from "../technical/SwithTheme";
 const MobileMenu = () => {
   const {logout, user} = useContext(UserContext);
   return (
@@ -18,7 +19,6 @@ const MobileMenu = () => {
           </div>
           <Avatar className="avatar indigo darken-1">{user.name[0]}</Avatar>
           <span className="name">{user.name}</span>
-          <span>{"Количество элементов: 30"}</span>
         </div>
       </li>)
 }
@@ -27,21 +27,21 @@ const MobileMenu = () => {
       </li>
       <li>
         {user.isAuthenticated ? (
-          <Link className="blue-grey-text text-darken-2 sidenav-close" to={`/profile/${user.id}`}>
-            <Icon className="blue-grey-text text-darken-2">favorite</Icon>
+          <Link className="sidenav-close" to={`/profile/${user.id}`}>
+            <Icon >favorite</Icon>
             Моя коллекция
           </Link>
         ) : (
-          <Link className="blue-grey-text text-darken-2 nav-link sidenav-close" to="/signIn">
+          <Link className="nav-link sidenav-close" to="/signIn">
             Вход
           </Link>
         )}
       </li>
       <li>
         {user.isAuthenticated ? (
-          <Link className="blue-grey-text text-darken-2 nav-link sidenav-close" to="/" onClick={logout}>Выход</Link>
+          <Link className="nav-link sidenav-close" to="/" onClick={logout}>Выход</Link>
         ) : (
-          <Link className="blue-grey-text text-darken-2 nav-link sidenav-close" to="/signUp">
+          <Link className="nav-link sidenav-close" to="/signUp">
             Регистрация
           </Link>
         )}
@@ -50,18 +50,11 @@ const MobileMenu = () => {
         <div className="divider"></div>
       </li>
       <li>
-        <div className="switch">
-          <label className="blue-grey-text text-darken-2">
-            <Icon>brightness_4</Icon>
-            <input type="checkbox" />
-            <span className="lever" />
-            <Icon>brightness_5</Icon>
-          </label>
-        </div>
+        <SwitchTheme/>
       </li>
       <li>
-        <FlatButton className="blue-grey-text text-darken-2 flat-button">
-          <Icon className="blue-grey-text text-darken-2">language</Icon>
+        <FlatButton className="flat-button">
+          <Icon>language</Icon>
           Английский
         </FlatButton>
       </li>

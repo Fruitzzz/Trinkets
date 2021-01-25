@@ -52,7 +52,7 @@ const SignInPage = () => {
       </div>
       <div className="col s12">
         <FlatButton
-          className="btn-flat blue-grey-text text-darken-2 right flat-button"
+          className="btn-flat right flat-button"
           disabled={loading}
           onClick={signInHandler}
         >

@@ -47,7 +47,7 @@ const Item = ({ item, readOnly }) => {
       <p>{`Дата добавления: ${item.creationDate.slice(0, 10)}`}</p>
       {isOwner(item.ownerId) && !readOnly && (
         <Icon
-          className="secondary-content blue-grey-text text-darken-2"
+          className="secondary-content"
           onClick={removeHandler}
         >
           highlight_off

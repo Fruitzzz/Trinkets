@@ -23,7 +23,7 @@ const UserTools = ({user, setUsers}) => {
         <Tooltip arrow title="Перейти в профиль">
           <Link to={`/profile/${user._id}`} disabled={loading}>
           <IconButton>
-            <Icon>assignment_ind</Icon>
+            <Icon>account_box</Icon>
           </IconButton>
           </Link>
         </Tooltip>

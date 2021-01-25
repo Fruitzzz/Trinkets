@@ -82,7 +82,7 @@ const SignUpPage = () => {
       </div>
       <div className="col s12">
         <FlatButton
-          className="btn-flat blue-grey-text text-darken-2 right"
+          className="btn-flat right"
           disabled={comparePasswords() || loading}
           onClick={signUpHandler}
         >

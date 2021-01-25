@@ -36,7 +36,7 @@ const AddItemModal = () => {
   }, [error, message, clearError]);
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button variant="outlined" className="blue-border-btn" onClick={handleClickOpen}>
         Добавить новый элемент
       </Button>
       <Dialog fullScreen open={open} onClose={handleClose}>

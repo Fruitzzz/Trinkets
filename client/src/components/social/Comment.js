@@ -7,8 +7,8 @@ const Comment = ({comment}) => {
         <Avatar className="comment-avatar">{comment.author[0]}</Avatar>
       </div>
       <div className="col s10 m11">
-        <span>{comment.author}</span>
-        <p className="black-text" style={{ marginTop: "5px" }}>
+        <span className="comment-author">{comment.author}</span>
+        <p style={{ marginTop: "5px" }}>
           {comment.text}
         </p>
       </div>

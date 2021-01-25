@@ -28,7 +28,6 @@ const SearchForm = () => {
             onChange={changeHandler}
           />
           <Icon
-            className="blue-grey-text text-darken-2"
             onClick={searchHandler}
           >
             search
