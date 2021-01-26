@@ -2,8 +2,10 @@ import { React, useContext } from "react";
 import { ItemContext } from "../../context/item.context";
 import { Chip, Icon } from "react-materialize";
 import OptionalField from "./OptionalField";
+import { useTranslation } from "react-i18next";
 const AddItemForm = () => {
   const { newItem, editNewItem, setTags } = useContext(ItemContext);
+  const { t } = useTranslation();
   return (
     <div className="row" style={{ marginTop: "80px" }}>
       <div className="input-field col s12 m6 offset-m3">
@@ -15,7 +17,7 @@ const AddItemForm = () => {
           onChange={editNewItem}
           className="custom-input"
         />
-        <label htmlFor="item-title">Название</label>
+        <label htmlFor="item-title">{t("title")}</label>
       </div>
       <div className="input-field col s12 m6 offset-m3">
         <Chip
@@ -23,8 +25,8 @@ const AddItemForm = () => {
           closeIcon={<Icon className="close">close</Icon>}
           options={{
             data: newItem.tags,
-            placeholder: "Введите тег",
-            secondaryPlaceholder: "+ Тег",
+            placeholder: t("enterTag"),
+            secondaryPlaceholder: t("enterAnotherTag"),
             autocompleteOptions: {
               data: {
                 Apple: null,

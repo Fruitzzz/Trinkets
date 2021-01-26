@@ -2,8 +2,10 @@ import { React, useContext, useState } from "react";
 import { UserContext } from "../../context/user.context";
 import Button from "@material-ui/core/Button";
 import { useMessage } from "../../hooks/message.hook";
+import {useTranslation} from "react-i18next";
 const AddComment = ({ socket }) => {
   const { user } = useContext(UserContext);
+  const {t} = useTranslation();
   const [comment, setComment] = useState({
     author: user.name,
     authorId: user.id,
@@ -26,13 +28,13 @@ const AddComment = ({ socket }) => {
         className="materialize-textarea custom-input"
         onChange={changeHandler}
       />
-      <label htmlFor="comment-input">Оставьте комментарий</label>
+      <label htmlFor="comment-input">{t("leaveComment")}</label>
       <Button
         variant="outlined"
         className="blue-border-btn left"
         onClick={clickHandler}
       >
-        Опубликовать
+        {t("post")}
       </Button>
     </div>
   );

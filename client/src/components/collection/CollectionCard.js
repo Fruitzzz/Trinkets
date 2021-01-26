@@ -7,8 +7,10 @@ import { Image } from "cloudinary-react";
 import RemoveAlert from "../technical/RemoveAlert";
 import UpdateCollectionModal from "./UpdateCollectionModal";
 import { useCommon } from "../../hooks/common.hook";
+import { useTranslation } from "react-i18next";
 const CollectionCard = ({ collection, setCollections, readOnly }) => {
   const { isOwner } = useCommon();
+  const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
   const [openAlert, setOpenAlert] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
@@ -52,7 +54,7 @@ const CollectionCard = ({ collection, setCollections, readOnly }) => {
     } catch {}
   };
   return (
-    <div className="card col s12 m4 hoverable">
+    <div className="card col s12 m6 offset-m3 l4 hoverable">
       <div className="card-image">
         <Image
           cloudName="dxqkl2we4"
@@ -73,23 +75,22 @@ const CollectionCard = ({ collection, setCollections, readOnly }) => {
       <div className="card-content">
         <span className="card-title">{collection.title}</span>
         <p>
-          Тема:
-          {` ${collection.subject}`}
+          {`${t("subject")}: ${collection.subject}`}
         </p>
         <p>
-          Автор:
+        {`${t("author")}: `}
           <Link
             className="indigo-text text-darken-4"
             to={`/profile/${collection.ownerId}`}
           >
-            {` ${collection.ownerName}`}
+            {collection.ownerName}
           </Link>
         </p>
       </div>
       <div className="card-actions">
         <Link key={collection._id} to={`/collection/${collection._id}`}>
           <button className="btn-flat right" style={{ marginBottom: "10px" }}>
-            Подробнее
+            {t("more")}
           </button>
         </Link>
       </div>
@@ -100,8 +101,8 @@ const CollectionCard = ({ collection, setCollections, readOnly }) => {
         open={Boolean(anchorEl)}
         onClose={handleCloseMenu}
       >
-        <MenuItem onClick={handleOpenEdit}>Редактировать</MenuItem>
-        <MenuItem onClick={handleOpenAlert}>Удалить коллекцию</MenuItem>
+        <MenuItem onClick={handleOpenEdit}>{t("edit")}</MenuItem>
+        <MenuItem onClick={handleOpenAlert}>{t("delete")}</MenuItem>
       </Menu>
       <RemoveAlert
         open={openAlert}

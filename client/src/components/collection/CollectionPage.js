@@ -10,10 +10,12 @@ import CollapsibleMarkdown from "../technical/CollapsibleMarkdown";
 import EditFAB from "../technical/EditFAB";
 import UpdateCollectionModal from "../collection/UpdateCollectionModal";
 import { useCommon } from "../../hooks/common.hook";
+import { useTranslation } from "react-i18next";
 const CollectionPage = () => {
   const { isOwner } = useCommon();
   const { request, loading } = useHttp();
   const history = useHistory();
+  const { t } = useTranslation();
   const params = useParams();
   const [collection, setCollection] = useState(null);
   const {
@@ -100,19 +102,19 @@ const CollectionPage = () => {
               <h3 className="center-align">{collection.title}</h3>
             </li>
             <li className="collection-item">
-              <p className="flow-text">Автор: {collection.ownerName}</p>
+              <p className="flow-text">{`${t("author")}: ${collection.ownerName}`}</p>
             </li>
             <li className="collection-item">
-              <p className="flow-text"> Тема: {collection.subject}</p>
+              <p className="flow-text">{`${t("subject")}: ${collection.subject}`}</p>
             </li>
             <li className="collection-item">
-              <p className="flow-text"> Количество элементов: {items.length}</p>
+              <p className="flow-text">{`${t("amount")}: ${items.length}`}</p>
             </li>
           </ul>
         </div>
         <div className="col s12">
           <CollapsibleMarkdown
-            header="Описание"
+            header={t("description")}
             description={collection.description}
           />
           <ItemsSection />

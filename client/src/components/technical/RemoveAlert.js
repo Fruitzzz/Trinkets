@@ -1,6 +1,8 @@
 import { React } from "react";
 import { Dialog, DialogActions, DialogTitle, Button } from "@material-ui/core";
+import {useTranslation} from "react-i18next";
 const RemoveAlert = ({ open, setOpen, loading, onAccept}) => {
+  const {t} = useTranslation();
   const handleCloseModal = () => {
     setOpen(false);
   };
@@ -12,7 +14,7 @@ const RemoveAlert = ({ open, setOpen, loading, onAccept}) => {
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-          Вы уверены, что хотите удалить?
+          {t("alert")}
       </DialogTitle>
       <DialogActions>
         <Button
@@ -21,10 +23,10 @@ const RemoveAlert = ({ open, setOpen, loading, onAccept}) => {
           color="primary"
           autoFocus
         >
-          Нет
+          {t("no")}
         </Button>
         <Button onClick={onAccept} disabled={loading} color="primary">
-          Да
+          {t("yes")}
         </Button>
       </DialogActions>
     </Dialog>

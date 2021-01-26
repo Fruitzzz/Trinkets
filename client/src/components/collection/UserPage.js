@@ -6,9 +6,11 @@ import CollectionCard from "./CollectionCard";
 import { Icon } from "react-materialize";
 import { useCommon } from "../../hooks/common.hook";
 import { CommonContext } from "../../context/common.context";
+import { useTranslation } from "react-i18next";
 const UserPage = () => {
   const history = useHistory();
   const { isOwner } = useCommon();
+  const { t } = useTranslation();
   const [collections, setCollections] = useState(null);
   const params = useParams();
   const { request } = useHttp();
@@ -43,7 +45,7 @@ const UserPage = () => {
         )}
       </div>
       <div className="col s12">
-        <h3>{`Страница пользователя ${openedUser.name}`}</h3>
+        <h3>{`${t("userPage")} ${openedUser.name}`}</h3>
         {!!collections.length ? (
           collections.map((item, index) => (
             <CollectionCard
@@ -58,7 +60,7 @@ const UserPage = () => {
               className="center-align grey-text text-lighten-1"
               style={{ marginTop: "250px" }}
             >
-              Тут пока ничего нет
+             {t("nothing")}
             </h4>
           </div>
         )}

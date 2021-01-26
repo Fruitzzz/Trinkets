@@ -1,12 +1,15 @@
 import { React, useEffect, useState } from "react";
+import { Icon } from "react-materialize";
 import { Link, useHistory } from "react-router-dom";
 import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
 import { Link as FlatButton } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 const SignUpPage = () => {
   const history = useHistory();
   const message = useMessage();
   const { loading, error, request, clearError } = useHttp();
+  const { t } = useTranslation();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -35,7 +38,7 @@ const SignUpPage = () => {
   };
   return (
     <div className="row auth-form">
-      <h2>Регистрация</h2>
+      <h2>{t("signUp")}</h2>
       <div className="input-field col s12">
         <input
           value={form.name}
@@ -45,7 +48,7 @@ const SignUpPage = () => {
           onChange={changeHandler}
           className="custom-input"
         />
-        <label htmlFor="sign-up-name">Имя</label>
+        <label htmlFor="sign-up-name">{t("name")}</label>
       </div>
       <div className="input-field col s12">
         <input
@@ -67,7 +70,7 @@ const SignUpPage = () => {
           onChange={changeHandler}
           className="custom-input"
         />
-        <label htmlFor="sign-up-password">Пароль</label>
+        <label htmlFor="sign-up-password">{t("password")}</label>
       </div>
       <div className="input-field col s12">
         <input
@@ -78,7 +81,7 @@ const SignUpPage = () => {
           onChange={changeHandler}
           className="custom-input"
         />
-        <label htmlFor="sign-up-confirm">Повторить пароль</label>
+        <label htmlFor="sign-up-confirm">{t("repeatPassword")}</label>
       </div>
       <div className="col s12">
         <FlatButton
@@ -86,10 +89,10 @@ const SignUpPage = () => {
           disabled={comparePasswords() || loading}
           onClick={signUpHandler}
         >
-          <i className="material-icons right">send</i>
-          Регистрация
+          <Icon className="right">send</Icon>
+          {t("signUp")}
         </FlatButton>
-        <Link to="/signIn">Уже есть аккаунт? Войдите.</Link>
+        <Link to="/signIn">{t("offerToSignIn")}</Link>
       </div>
     </div>
   );

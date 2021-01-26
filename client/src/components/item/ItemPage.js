@@ -1,8 +1,11 @@
 import { React, useEffect, useCallback, useState, useContext } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams, Link } from "react-router-dom";
 import { SocketContext } from "../../context/socket.context";
+import { useCommon } from "../../hooks/common.hook";
+import { UserContext } from "../../context/user.context";
 import { Chip } from "react-materialize";
 import { useHttp } from "../../hooks/http.hook";
+import { useTranslation } from "react-i18next";
 import Loader from "../technical/Loader";
 import OptionalField from "./OptionalField";
 import Comment from "../social/Comment";
@@ -10,8 +13,6 @@ import AddComment from "../social/AddComment";
 import LikeSection from "../social/LikeSection";
 import EditFAB from "../technical/EditFAB";
 import UpdateItemModal from "./ItemUpdateModal";
-import { useCommon } from "../../hooks/common.hook";
-import { UserContext } from "../../context/user.context";
 const ItemPage = () => {
   const { isOwner } = useCommon();
   const socket = useContext(SocketContext);
@@ -19,6 +20,7 @@ const ItemPage = () => {
   const { request, loading } = useHttp();
   const history = useHistory();
   const params = useParams();
+  const { t } = useTranslation();
   const [item, setItem] = useState(null);
   const [openUpdate, setOpenUpdate] = useState(false);
   const fetchItem = useCallback(async () => {
@@ -71,19 +73,21 @@ const ItemPage = () => {
             <h3 className="center-align">{item.title}</h3>
           </li>
           <li className="collection-item">
-            <p className="flow-text ">Коллекция: {item.collectionTitle}</p>
+            <p className="flow-text ">{t("collection")}: {item.collectionTitle}</p>
           </li>
           <li className="collection-item">
-            <span className="flow-text">Теги:</span>
+            <span className="flow-text">{`${t("tags")}: `}</span>
             {item.tags.map((tag, index) => (
-              <Chip className="right" key={index}>
+              <Link key={index} to={`/search/${tag.tag}`}>
+              <Chip className="right">
                 {tag.tag}
               </Chip>
+              </Link>
             ))}
           </li>
           <li className="collection-item">
             <span className="flow-text">
-              Дата добавления: {item.creationDate.slice(0, 10)}
+              {t("addDate")}: {item.creationDate.slice(0, 10)}
             </span>
           </li>
           {item.optionalFields.map((field, index) => (

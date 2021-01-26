@@ -22,7 +22,7 @@ body {
   color: ${getForeground};
 }
 .card, .nav-wrapper, .sidenav, .MuiPaper-root, .dropdown-content, .datepicker-modal {
-  background-color: ${getContentBackground};
+  background-color: ${getContentBackground} !important;
 }
 
 .collection .collection-item, .collection.with-header .collection-header, .collapsible-header {
@@ -30,16 +30,17 @@ body {
   border-color: ${getBorderColor};
 }
 
-.collection, .collection.with-header, .collapsible, .collapsible-body, .MuiButton-outlined {
+.collection, .collection.with-header, .collapsible, .collapsible-body, button.MuiButton-outlined {
   border-color: ${getBorderColor};
 }
  .MuiIconButton-root,
  .btn-flat,
  .MuiButton-label,
  .MuiButtonBase-root,
- .MuiFormLabel-root,
+ li.MuiListItem-button,
+ label.MuiFormLabel-root,
  .MuiAppBar-colorPrimary,
- .MuiSelect-icon,
+ svg.MuiSelect-icon,
  .MuiTypography-h6,
  .dropzone-content,
  .datepicker-day-button {
@@ -65,7 +66,7 @@ nav .brand-logo,
 .input-field input[type=search] ~ .material-icons {
   color: ${getForeground} !important;
 }
-.MuiInputBase-input, .MuiInput-underline:before {
+div.MuiInputBase-input, div.MuiInput-underline:before {
   color: ${getForeground};
   border-bottom: 1px solid ${getBorderColor};
 }

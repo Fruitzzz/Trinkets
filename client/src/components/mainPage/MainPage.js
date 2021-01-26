@@ -4,10 +4,12 @@ import Cloud from "./Cloud";
 import CollectionCard from "../collection/CollectionCard";
 import Item from "../item/Item";
 import Loader from "../technical/Loader";
+import { useTranslation } from "react-i18next";
 const MainPage = () => {
   const { request } = useHttp();
   const [collections, setCollections] = useState(null);
   const [items, setItems] = useState(null);
+  const { t } = useTranslation();
   const fetchCollections = useCallback(async () => {
     try {
       const fetched = await request("/api/collections/biggestCollections");
@@ -39,7 +41,7 @@ const MainPage = () => {
         ))}
       </div>
       <div className="col s12">
-        <h3>Новые элементы</h3>
+        <h3>{t("newItems")}</h3>
         <ul className="collection">
           {items.map((item, index) => (
             <Item key={index} item={item} readOnly />

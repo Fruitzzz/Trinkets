@@ -7,9 +7,11 @@ import { useMessage } from "../../hooks/message.hook";
 import { CollectionContext } from "../../context/collection.context";
 import { useCollection } from "../../hooks/collection.hook";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 const AddCollPage = () => {
   const history = useHistory();
   const { loading, request, error, clearError } = useHttp();
+  const { t } = useTranslation();
   const message = useMessage();
   const {
     editCollection,
@@ -56,7 +58,7 @@ const AddCollPage = () => {
             onClick={addHandler}
             disabled={loading}
           >
-            Добавить коллекцию
+            {t("addCollection")}
           </Button>
         </div>
       </div>

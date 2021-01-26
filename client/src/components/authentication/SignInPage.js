@@ -1,13 +1,16 @@
 import { React, useState, useEffect, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useHttp } from "../../hooks/http.hook";
+import {Icon} from "react-materialize"
 import { useMessage } from "../../hooks/message.hook";
 import {UserContext} from "../../context/user.context";
 import { Link as FlatButton } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 const SignInPage = () => {
   const user = useContext(UserContext)
   const message = useMessage();
   const { loading, error, request, clearError } = useHttp();
+  const { t } = useTranslation();
   const history = useHistory();
   const [form, setForm] = useState({
     name: "",
@@ -29,7 +32,7 @@ const SignInPage = () => {
   };
   return (
     <div className="row auth-form">
-      <h2>Вход</h2>
+      <h2>{t("signIn")}</h2>
       <div className="input-field col s12">
         <input
           id="sign-in-name"
@@ -38,7 +41,7 @@ const SignInPage = () => {
           onChange={changeHandler}
           className="custom-input"
         />
-        <label htmlFor="sign-in-name">Имя</label>
+        <label htmlFor="sign-in-name">{t("name")}</label>
       </div>
       <div className="input-field col s12">
         <input
@@ -48,7 +51,7 @@ const SignInPage = () => {
           onChange={changeHandler}
           className="custom-input"
         />
-        <label htmlFor="sign-in-password">Пароль</label>
+        <label htmlFor="sign-in-password">{t("password")}</label>
       </div>
       <div className="col s12">
         <FlatButton
@@ -56,11 +59,11 @@ const SignInPage = () => {
           disabled={loading}
           onClick={signInHandler}
         >
-          <i className="material-icons right">send</i>
-          Вход
+          <Icon className="right">send</Icon>
+          {t("signIn")}
         </FlatButton>
         <Link to="/signUp">
-          Нет аккаунта? Зарегистрируйтесь.
+         {t("offerToSignUp")}
         </Link>
       </div>
     </div>

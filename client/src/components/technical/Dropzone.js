@@ -1,7 +1,9 @@
 import { React, useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import {useTranslation} from "react-i18next";
 const Dropzone = ({setImage}) => {
   const [previewSource, setPreviewSource] = useState(null);
+  const {t} = useTranslation();
   const onDrop = useCallback(
     (acceptedFile) => {
       const reader = new FileReader();
@@ -25,11 +27,11 @@ const Dropzone = ({setImage}) => {
         <div className="text-center">
           {isDragActive ? (
             <h6 className="dropzone-content">
-              Отпустите, для добавления изображения
+              {t("drop-accept")}
             </h6>
           ) : (
             <h6 className="dropzone-content">
-              Перетащите или кликните для добавления изображения
+              {t("drop-drag")}
             </h6>
           )}
         </div>

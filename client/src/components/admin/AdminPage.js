@@ -3,7 +3,9 @@ import { useHttp } from "../../hooks/http.hook";
 import Loader from "../technical/Loader";
 import SubjectTools from "./SubjectTools";
 import UserTools from "./UserTools";
+import { useTranslation } from "react-i18next";
 const AdminPage = () => {
+  const {t} = useTranslation()
   const { request } = useHttp();
   const [users, setUsers] = useState();
   const fetchUsers = useCallback(async () => {
@@ -24,18 +26,18 @@ const AdminPage = () => {
         <table className=" centered">
           <thead>
             <tr>
-              <th>Имя</th>
-              <th>Роль</th>
-              <th>Статус</th>
-              <th>Действия</th>
+              <th>{t("name")}</th>
+              <th>{t("role")}</th>
+              <th>{t("status")}</th>
+              <th>{t("actions")}</th>
             </tr>
           </thead>
           <tbody>
             {users.map((user, index) => (
               <tr key={index}>
                 <td>{user.name}</td>
-                <td>{user.isAdmin ? "Администратор" : "Пользователь"}</td>
-                <td>{user.isBlocked ? "Заблокирован" : "Активный"}</td>
+                <td>{user.isAdmin ? t("admin") : t("user")}</td>
+                <td>{user.isBlocked ? t("blocked") : t("active")}</td>
                 <UserTools user={user} setUsers={setUsers} />
               </tr>
             ))}

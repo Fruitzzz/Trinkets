@@ -8,8 +8,10 @@ import {
 } from "@material-ui/core";
 import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
+import { useTranslation } from "react-i18next";
 const SubjectTools = () => {
   const message = useMessage();
+  const { t } = useTranslation();
   const { request, loading, clearError, error } = useHttp();
   const [pickedSubject, setPickedSubject] = useState("");
   const [subjects, setSubjects] = useState([]);
@@ -66,14 +68,14 @@ const SubjectTools = () => {
           onChange={changeHandler}
           className="custom-input"
         />
-        <label htmlFor="subject">Новая тема</label>
+        <label htmlFor="subject"> {t("newSubject")}</label>
       </div>
       <div className="col s12">
         <Button variant="outlined" disabled={loading} onClick={addHandler}>
-          Добавить тему коллекций
+          {t("addSubject")}
         </Button>
         <FormControl style={{ width: "100%", marginBottom: "15px" }}>
-          <InputLabel>Тема</InputLabel>
+          <InputLabel> {t("subject")}</InputLabel>
           <Select
             name="subject"
             value={subjects.length === 0 ? "" : pickedSubject}
@@ -89,7 +91,7 @@ const SubjectTools = () => {
           </Select>
         </FormControl>
         <Button variant="outlined" disabled={loading} onClick={deleteHandler}>
-          Удалить выбранную тему
+          {t("deletePickedSubject")}
         </Button>
       </div>
     </div>

@@ -132,3 +132,8 @@ button:focus {
 .comment-author {
   font-size: 20px;
 }
+@media only screen and (min-width: 993px) {
+.hide-on-large {
+    display: none !important;
+}
+}

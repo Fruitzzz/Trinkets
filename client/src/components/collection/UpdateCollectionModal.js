@@ -7,6 +7,7 @@ import {
   Button,
   DialogContent,
 } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 import { Icon, TextInput, Textarea } from "react-materialize";
 import Dropzone from "../technical/Dropzone";
 import SubjectsPicker from "../technical/SubjectsPicker";
@@ -40,6 +41,7 @@ const UpdateCollectionModal = ({
   const setImage = (image) => {
     setUpdate({ ...update, image: image });
   };
+  const { t } = useTranslation();
   return (
     <Dialog fullScreen open={open} onClose={handleClose}>
       <AppBar>
@@ -48,7 +50,7 @@ const UpdateCollectionModal = ({
             close
           </Icon>
           <Typography className="modal-header" variant="h6">
-            Редактирование коллекции
+            {t("edit")}
           </Typography>
           <Button
             autoFocus
@@ -58,7 +60,7 @@ const UpdateCollectionModal = ({
               updateHandler(update);
             }}
           >
-            Сохранить
+            {t("save")}
           </Button>
         </Toolbar>
       </AppBar>
@@ -72,7 +74,7 @@ const UpdateCollectionModal = ({
               className="custom-input"
               onChange={changeHandler}
               defaultValue={update.title}
-              label={"Название"}
+              label={t("title")}
             />
           </div>
           <div className="col s12 m7 offset-m1">
@@ -82,7 +84,7 @@ const UpdateCollectionModal = ({
               className="custom-input"
               onChange={changeHandler}
               defaultValue={update.description}
-              label={"Описание"}
+              label={t("description")}
             />
           </div>
           <div className="col s12 m7 offset-m1">

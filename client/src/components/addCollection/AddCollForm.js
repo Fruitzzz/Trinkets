@@ -5,11 +5,13 @@ import { Link as FlatButton } from "@material-ui/core";
 import { Dropdown, Icon } from "react-materialize";
 import OptionalField from "./OptionalField";
 import SubjectsPicker from "../technical/SubjectsPicker";
+import { useTranslation } from "react-i18next";
 const AddCollForm = () => {
   const { collection, editCollection, addField } = useContext(
     CollectionContext
   );
   const [fields, setFields] = useState(collection.optionalFields);
+  const { t } = useTranslation();
   useEffect(() => {
     setFields(collection.optionalFields);
   }, [setFields, collection.optionalFields]);
@@ -24,7 +26,7 @@ const AddCollForm = () => {
           onChange={editCollection}
           className="custom-input"
         />
-        <label htmlFor="collection-title">Название</label>
+        <label htmlFor="collection-title">{t("title")}</label>
       </div>
       <div className="input-field col s12 m7 offset-m1">
         <textarea
@@ -34,7 +36,7 @@ const AddCollForm = () => {
           value={collection.description}
           onChange={editCollection}
         />
-        <label htmlFor="collection-description">Описание</label>
+        <label htmlFor="collection-description">{t("description")}</label>
       </div>
       <div className="col s12 m7 offset-m1 right">
         <SubjectsPicker
@@ -55,7 +57,7 @@ const AddCollForm = () => {
               style={{ marginTop: "10px" }}
               name="string"
             >
-              Добавить поле
+              {t("addField")}
             </Button>
           }
         >
@@ -65,7 +67,7 @@ const AddCollForm = () => {
             onClick={addField}
           >
             <Icon className="blue-grey-text text-darken-2">date_range</Icon>
-            Дата
+            {t("date")}
           </FlatButton>
           <FlatButton
             className="blue-grey-text text-darken-2 nav-link flat-button"
@@ -73,7 +75,7 @@ const AddCollForm = () => {
             onClick={addField}
           >
             <Icon className="blue-grey-text text-darken-2">check_box</Icon>
-            Да/Нет
+            {t("yes/no")}
           </FlatButton>
           <FlatButton
             className="blue-grey-text text-darken-2 nav-link flat-button"
@@ -81,7 +83,7 @@ const AddCollForm = () => {
             onClick={addField}
           >
             <Icon className="blue-grey-text text-darken-2">exposure_zero</Icon>
-            Число
+            {t("number")}
           </FlatButton>
           <FlatButton
             className="blue-grey-text text-darken-2 nav-link flat-button"
@@ -89,7 +91,7 @@ const AddCollForm = () => {
             onClick={addField}
           >
             <Icon className="blue-grey-text text-darken-2">title</Icon>
-            Надпись
+            {t("label")}
           </FlatButton>
           <FlatButton
             className="blue-grey-text text-darken-2 nav-link flat-button"
@@ -97,7 +99,7 @@ const AddCollForm = () => {
             onClick={addField}
           >
             <Icon className="blue-grey-text text-darken-2">text_fields</Icon>
-            Текст
+            {t("text")}
           </FlatButton>
         </Dropdown>
       </div>
