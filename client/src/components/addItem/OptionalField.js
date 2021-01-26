@@ -75,6 +75,7 @@ const OptionalField = ({ item, index }) => {
     }
     default: {
       return (
+        <div className="input-field col s12 m6 offset-m3" style={{padding: 0}}>
         <TextInput
           s={12}
           value={newItem.optionalFields[index].value}
@@ -84,6 +85,7 @@ const OptionalField = ({ item, index }) => {
           data-length={25}
           label={item.name}
         />
+        </div>
       );
     }
   }

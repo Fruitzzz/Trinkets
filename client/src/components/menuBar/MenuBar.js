@@ -26,15 +26,6 @@ const MenuBar = () => {
           </li>
           <li>
             {user.isAuthenticated ? (
-              <Link className="nav-link" to="/" onClick={logout}>{t("logout")}</Link>
-            ) : (
-              <Link className="nav-link" to="/signIn">
-                {t("signIn")}
-              </Link>
-            )}
-          </li>
-          <li>
-            {user.isAuthenticated ? (
               <Dropdown
                 trigger={
                   <Avatar className=" avatar avatar-desk indigo darken-1">
@@ -53,14 +44,26 @@ const MenuBar = () => {
                   </Link>
                 )}
                 <SwitchLang />
+                <Link className="nav-link" to="/" onClick={logout}>
+                  <Icon>exit_to_app</Icon>
+                  {t("logout")}
+                </Link>
               </Dropdown>
             ) : (
-              <Link className="nav-link" to="/signUp">
-                {t("signUp")}
-              </Link>
+              <Dropdown
+                trigger={<Avatar className=" avatar avatar-desk grey"></Avatar>}
+              >
+                <Link className="nav-link" to="/signIn">
+                  <Icon>arrow_forward</Icon>
+                  {t("signIn")}
+                </Link>
+                <Link className="nav-link" to="/signUp">
+                  <Icon>person_add</Icon>
+                  {t("signUp")}
+                </Link>
+                <SwitchLang />
+              </Dropdown>
             )}
-          </li>
-          <li>
           </li>
         </ul>
         <form className="hide-on-med-and-down search-form">

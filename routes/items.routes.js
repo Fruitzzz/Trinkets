@@ -2,6 +2,7 @@ const express = require("express");
 const Item = require("../models/Item");
 const { check, validationResult } = require("express-validator");
 const router = express.Router();
+const auth = require("../middleware/verify.middleware");
 const success = { msg: "Успешно" };
 const fail = { msg: "Ошибка сервера" };
 router.get("/item/:id", async (req, res) => {
@@ -33,8 +34,18 @@ router.get("/tags", async (req, res) => {
     res.status(500).json(fail);
   }
 });
+router.get("/search/:searchText", async (req, res) => {
+  try{
+  const result = await Item.fuzzySearch(req.params.searchText);
+  res.status(201).json(result);
+  }
+  catch(e) {
+    res.status(500).json(fail);
+  }
+})
 router.post(
   "/addNewItem",
+  auth,
   [
     check("title", "Введите название элемента").notEmpty(),
     check("tags", "Элементы должны иметь как минимум один тег").notEmpty(),
@@ -59,7 +70,7 @@ router.post(
     }
   }
 );
-router.post("/removeItem", async (req, res) => {
+router.post("/removeItem", auth, async (req, res) => {
   try {
     await Item.findByIdAndDelete(req.body.itemId);
     if (req.body.collectionId) {
@@ -70,24 +81,14 @@ router.post("/removeItem", async (req, res) => {
     res.status(500).json(fail);
   }
 });
-router.post("/updateItem", async (req, res) => {
+router.post("/updateItem", auth, async (req, res) => {
   try {
     const { id, title, tags } = req.body;
     await Item.findByIdAndUpdate(id, { title, tags });
     const item = await Item.findById(id).lean();
     res.status(201).json({ ...item });
   } catch (e) {
-    console.log(e.message);
     res.status(500).json(fail);
   }
 });
-router.get("/search/:searchText", async (req, res) => {
-  try{
-  const result = await Item.fuzzySearch(req.params.searchText);
-  res.status(201).json(result);
-  }
-  catch(e) {
-    res.status(500).json(fail);
-  }
-})
 module.exports = router;

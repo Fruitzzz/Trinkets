@@ -49,6 +49,7 @@ const CollectionPage = () => {
     try {
       await request("/api/collections/removeCollection", "POST", {
         id: collection._id,
+        image: collection.imageId
       });
       history.push(`/profile/${collection.ownerId}`);
     } catch (e) {}

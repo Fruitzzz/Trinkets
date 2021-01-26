@@ -5,15 +5,11 @@ const tokenVerify = (req, res, next) => {
         return next();
     }
     try{
-        const token = req.headers.authorization.split()[1];
-        if(!token) {
-            throw new Error();
-        }
-        const decoded = jwt.verify(token, config.get("jwtSecret"))
-        req.user = decoded
+        const token = req.headers.authorization
+        jwt.verify(token, config.get("jwtSecret"))
         next();
     } catch(e) {
-        res.status(401).json({message: "Отсутствует авторизация"})
+        res.status(401).json({msg: "Unauthorized"})
     }
 }
-module.exports(tokenVerify);
+module.exports=tokenVerify;

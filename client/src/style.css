@@ -65,6 +65,9 @@
 .flat-button:hover {
   text-decoration: none !important;
 }
+.dropzone-content {
+  text-align: center;
+}
 .progress {
   margin-top: 250px;
 }

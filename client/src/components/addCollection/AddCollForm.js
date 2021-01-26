@@ -62,43 +62,43 @@ const AddCollForm = () => {
           }
         >
           <FlatButton
-            className="blue-grey-text text-darken-2 nav-link flat-button"
+            className="nav-link flat-button"
             name="date"
             onClick={addField}
           >
-            <Icon className="blue-grey-text text-darken-2">date_range</Icon>
+            <Icon >date_range</Icon>
             {t("date")}
           </FlatButton>
           <FlatButton
-            className="blue-grey-text text-darken-2 nav-link flat-button"
+            className="nav-link flat-button"
             name="boolean"
             onClick={addField}
           >
-            <Icon className="blue-grey-text text-darken-2">check_box</Icon>
+            <Icon>check_box</Icon>
             {t("yes/no")}
           </FlatButton>
           <FlatButton
-            className="blue-grey-text text-darken-2 nav-link flat-button"
+            className="nav-link flat-button"
             name="number"
             onClick={addField}
           >
-            <Icon className="blue-grey-text text-darken-2">exposure_zero</Icon>
+            <Icon >exposure_zero</Icon>
             {t("number")}
           </FlatButton>
           <FlatButton
-            className="blue-grey-text text-darken-2 nav-link flat-button"
+            className="nav-link flat-button"
             name="title"
             onClick={addField}
           >
-            <Icon className="blue-grey-text text-darken-2">title</Icon>
+            <Icon >title</Icon>
             {t("label")}
           </FlatButton>
           <FlatButton
-            className="blue-grey-text text-darken-2 nav-link flat-button"
+            className="nav-link flat-button"
             name="text"
             onClick={addField}
           >
-            <Icon className="blue-grey-text text-darken-2">text_fields</Icon>
+            <Icon >text_fields</Icon>
             {t("text")}
           </FlatButton>
         </Dropdown>

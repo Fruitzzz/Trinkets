@@ -24,7 +24,6 @@ const Dropzone = ({setImage}) => {
     <div className="col s6 offset-s3 m4">
       <div {...getRootProps()} className="dropzone valign-wrapper">
         <input className="dropzone-input" {...getInputProps()} />
-        <div className="text-center">
           {isDragActive ? (
             <h6 className="dropzone-content">
               {t("drop-accept")}
@@ -34,7 +33,6 @@ const Dropzone = ({setImage}) => {
               {t("drop-drag")}
             </h6>
           )}
-        </div>
       </div>
       {previewSource && (
         <img

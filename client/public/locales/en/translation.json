@@ -53,10 +53,11 @@
     "leaveComment": "Leave some comment",
     "post": "Post",
     "comments": "Comments",
-    "drop-accept": "release, to add image",
-    "drop-drag": "drag, or click to add image",
+    "drop-accept": "Release, to add image",
+    "drop-drag": "Drag, or click to add image",
     "notFound": "Page not found",
     "alert": "Do you really want to delete?",
     "no": "No",
-    "yes": "Yes"
+    "yes": "Yes",
+    "swapRole": "Swap role"
 }

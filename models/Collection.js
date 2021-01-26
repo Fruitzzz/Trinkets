@@ -6,7 +6,7 @@ const schema = new Schema({
   title: { type: String, required: true, unique: true },
   description: { type: String, required: true },
   subject: { type: String, required: true },
-  imageId: { type: String, default: "h34mxfqiv9uwbdvmkmdg"},
+  imageId: { type: String, default: "r8tpac1kmsgzqndept2i"},
   optionalFields: { type: [], default: null },
 });
 module.exports = model("Collection", schema);

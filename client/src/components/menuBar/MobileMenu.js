@@ -41,17 +41,29 @@ const MobileMenu = () => {
           </Link>
         ) : (
           <Link className="nav-link sidenav-close" to="/signIn">
+            <Icon>arrow_forward</Icon>
             {t("signIn")}
           </Link>
         )}
       </li>
+
+      {user.isAdmin && (
+        <li>
+          <Link className="nav-link" to="/admin">
+            <Icon>stars</Icon>
+            {t("admin")}
+          </Link>
+        </li>
+      )}
       <li>
         {user.isAuthenticated ? (
           <Link className="nav-link sidenav-close" to="/" onClick={logout}>
+            <Icon>exit_to_app</Icon>
             {t("logout")}
           </Link>
         ) : (
           <Link className="nav-link sidenav-close" to="/signUp">
+            <Icon>person_add</Icon>
             {t("signUp")}
           </Link>
         )}

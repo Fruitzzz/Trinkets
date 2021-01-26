@@ -52,7 +52,8 @@ body {
 .chips .input,
 .search,
 .input-field input[type=search]:focus:not(.browser-default),
-.sidenav li>a {
+.sidenav li>a,
+.datepicker {
   color: ${getForeground};
 }
 .MuiTypography-h6,

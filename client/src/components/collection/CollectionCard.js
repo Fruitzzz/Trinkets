@@ -34,7 +34,7 @@ const CollectionCard = ({ collection, setCollections, readOnly }) => {
       const response = await request(
         "/api/collections/removeCollection",
         "POST",
-        { id: collection._id, ownerId: collection.ownerId }
+        { id: collection._id, ownerId: collection.ownerId, image: collection.imageId }
       );
       setOpenAlert(false);
       setCollections([...response]);

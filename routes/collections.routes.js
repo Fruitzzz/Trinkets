@@ -3,9 +3,10 @@ const Collection = require("../models/Collection");
 const User = require("../models/User");
 const Item = require("../models/Item");
 const Subjects = require("../models/Subjects");
-const { check, validationResult } = require("express-validator");
 const router = express.Router();
+const auth = require("../middleware/verify.middleware");
 const { cloudinary } = require("../utils/cloudinary");
+const { check, validationResult } = require("express-validator");
 const success = { msg: "Успешно" };
 const fail = { msg: "Ошибка сервера" };
 router.get("/user/:id", async (req, res) => {
@@ -13,13 +14,11 @@ router.get("/user/:id", async (req, res) => {
     const userId = req.params.id;
     const collections = await Collection.find({ ownerId: userId });
     const user = await User.findById(userId);
-    res
-      .status(201)
-      .json({
-        collections: [...collections],
-        ownerName: user.name,
-        ownerId: user._id,
-      });
+    res.status(201).json({
+      collections: [...collections],
+      ownerName: user.name,
+      ownerId: user._id,
+    });
   } catch (e) {
     res.status(500).json(fail);
   }
@@ -64,6 +63,7 @@ router.get("/biggestCollections", async (req, res) => {
 });
 router.post(
   "/addNewCollection",
+  auth,
   [
     check("title", "Введите название коллекции").notEmpty(),
     check("description", "Введите описание").notEmpty(),
@@ -110,12 +110,13 @@ router.post(
   }
 );
 
-router.post("/removeCollection", async (req, res) => {
+router.post("/removeCollection", auth, async (req, res) => {
   try {
     const deleted = await Collection.findByIdAndDelete(req.body.id);
     if (!isDefault(req.body.image)) {
       cloudinary.uploader.destroy(deleted.imageId);
     }
+    await Item.deleteMany({ collectionId: deleted._id });
     if (req.body.ownerId) {
       const collections = await Collection.find({ ownerId: req.body.ownerId });
       res.status(201).json([...collections]);
@@ -124,7 +125,7 @@ router.post("/removeCollection", async (req, res) => {
     res.status(500).json(fail);
   }
 });
-router.post("/updateCollection", async (req, res) => {
+router.post("/updateCollection", auth, async (req, res) => {
   const { id, title, description, image, subject, ownerId } = req.body;
   try {
     const updateCollection = await Collection.findByIdAndUpdate(id, {
@@ -149,6 +150,6 @@ router.post("/updateCollection", async (req, res) => {
   }
 });
 const isDefault = (imageId) => {
-  return imageId === "h34mxfqiv9uwbdvmkmdg";
+  return imageId === "r8tpac1kmsgzqndept2i";
 };
 module.exports = router;
