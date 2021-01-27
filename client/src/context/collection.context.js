@@ -5,7 +5,7 @@ export const CollectionContext = createContext({
   subjects: null,
   editCollection: () => {},
   addField: () => {},
-  removeField: () => {},
+  deleteField: () => {},
   changeField: () => {},
   setImage: () => {},
 });

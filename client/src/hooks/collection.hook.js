@@ -26,9 +26,9 @@ export const useCollection = () => {
       ],
     });
   };
-  const removeField = (event) => {
+  const deleteField = (index) => {
     const fields = collection.optionalFields;
-    fields.splice(event.target.name, 1);
+    fields.splice(index, 1);
     setCollection({ ...collection, optionalFields: fields });
   };
   const changeField = (event) => {
@@ -40,7 +40,7 @@ export const useCollection = () => {
     collection,
     editCollection,
     addField,
-    removeField,
+    deleteField,
     changeField,
     setImage,
   };

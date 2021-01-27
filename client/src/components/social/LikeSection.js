@@ -12,7 +12,7 @@ const LikeSection = ({ likes, socket }) => {
     socket.emit("like", user.id);
     }
     else {
-      message("Необходима авторизация");
+      message("needAuth");
     }
   };
   return (

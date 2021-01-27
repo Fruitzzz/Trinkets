@@ -15,7 +15,7 @@ const SearchForm = () => {
     if (searchText.length > 0) {
       history.push(`/search/${searchText}`);
       setSearchText("");
-    } else message("Строка поиска пуста");
+    } else message("searchEmpty");
   };
   return (
     <div className="input-field">

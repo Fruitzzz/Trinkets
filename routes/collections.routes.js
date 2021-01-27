@@ -7,8 +7,8 @@ const router = express.Router();
 const auth = require("../middleware/verify.middleware");
 const { cloudinary } = require("../utils/cloudinary");
 const { check, validationResult } = require("express-validator");
-const success = { msg: "Успешно" };
-const fail = { msg: "Ошибка сервера" };
+const success = { msg: "success" };
+const fail = { msg: "serverFail" };
 router.get("/user/:id", async (req, res) => {
   try {
     const userId = req.params.id;
@@ -65,32 +65,27 @@ router.post(
   "/addNewCollection",
   auth,
   [
-    check("title", "Введите название коллекции").notEmpty(),
-    check("description", "Введите описание").notEmpty(),
-    check("subject", "Выберите тему").notEmpty(),
+    check("title", "enterCollectionName").notEmpty(),
+    check("description", "enterDescription").notEmpty(),
+    check("subject", "selectSubject").notEmpty(),
   ],
   async (req, res) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({
-          msg: errors
-            .array()
-            .map((el) => el.msg)
-            .join(". "),
+          msg: errors.array()[0].msg,
         });
       }
       req.body.optionalFields.forEach((item) => {
         if (item.name === "")
           return res.status(400).json({
-            msg: "У всех дополнительных полей должно быть имя",
+            msg: "optionalNames",
           });
       });
       const twin = await Collection.findOne({ title: req.body.title });
       if (twin) {
-        return res
-          .status(400)
-          .json({ msg: "Коллекция с таким названием есть" });
+        return res.status(400).json({ msg: "collectionExist" });
       }
       const collection = new Collection({
         ...req.body,

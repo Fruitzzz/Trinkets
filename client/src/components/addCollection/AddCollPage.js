@@ -17,7 +17,7 @@ const AddCollPage = () => {
     editCollection,
     collection,
     addField,
-    removeField,
+    deleteField,
     changeField,
     setImage,
   } = useCollection();
@@ -42,7 +42,7 @@ const AddCollPage = () => {
         editCollection,
         collection,
         addField,
-        removeField,
+        deleteField,
         changeField,
         setImage,
       }}

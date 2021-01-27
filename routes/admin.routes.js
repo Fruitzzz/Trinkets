@@ -7,7 +7,7 @@ const Item = require("../models/Item");
 const { cloudinary } = require("../utils/cloudinary");
 const auth = require("../middleware/verify.middleware");
 const router = express.Router();
-const fail = { msg: "Ошибка сервера" };
+const fail = { msg: "serverFail" };
 router.get("/users", auth, async (req, res) => {
   try {
     const users = await User.find();
@@ -58,16 +58,13 @@ router.post("/swap", auth, async (req, res) => {
 router.post(
   "/addSubject",
   auth,
-  [check("name", "Введите название темы").notEmpty()],
+  [check("name", "enterSubjectName").notEmpty()],
   async (req, res) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({
-          msg: errors
-            .array()
-            .map((el) => el.msg)
-            .join(". "),
+          msg: errors.array()[0].msg,
         });
       }
       const newSubject = new Subject({ name: req.body.name });

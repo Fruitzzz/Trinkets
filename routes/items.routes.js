@@ -3,14 +3,14 @@ const Item = require("../models/Item");
 const { check, validationResult } = require("express-validator");
 const router = express.Router();
 const auth = require("../middleware/verify.middleware");
-const success = { msg: "Успешно" };
-const fail = { msg: "Ошибка сервера" };
+const success = { msg: "succes" };
+const fail = { msg: "serverFail" };
 router.get("/item/:id", async (req, res) => {
   try {
     const item = await Item.findById(req.params.id).lean();
     res.status(201).json({ ...item });
   } catch (e) {
-    res.status(500).json({ msg: "Ошибка сервера" });
+    res.status(500).json(fail);
   }
 });
 router.get("/lastItems", async (req, res) => {
@@ -47,17 +47,15 @@ router.post(
   "/addNewItem",
   auth,
   [
-    check("title", "Введите название элемента").notEmpty(),
-    check("tags", "Элементы должны иметь как минимум один тег").notEmpty(),
+    check("title",  "enterItemName").notEmpty(),
+    check("tags", "itemTags").notEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
         msg: errors
-          .array()
-          .map((el) => el.msg)
-          .join(". "),
+          .array()[0].msg
       });
     }
     try {

@@ -17,7 +17,7 @@ const AddComment = ({ socket }) => {
   };
   const clickHandler = () => {
     if (comment.text.trim().length !== 0) socket.emit("addComment", comment);
-    else message("Введите текст комментария");
+    else message("enterComment");
     setComment({...comment, text: ""});
   };
   return (
