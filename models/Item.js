@@ -13,18 +13,21 @@ const schema = new Schema({
 });
 schema.plugin(fuzzySearching, {
   fields: [
-    "title",
+    { name: "title", minSize: 3 },
+    { name: "collectionTitle", minSize: 5 },
     {
       name: "tags",
+      minSize: 3,
       keys: ["tag"],
     },
-    "collectionTitle",
     {
       name: "comments",
+      minSize: 5,
       keys: ["text"],
     },
     {
       name: "optionalFields",
+      minSize: 3,
       key: ["text"],
     },
   ],
