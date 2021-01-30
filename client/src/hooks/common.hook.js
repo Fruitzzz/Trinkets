@@ -1,4 +1,4 @@
-import { useCallback, useState, useContext} from "react";
+import { useCallback, useState, useContext } from "react";
 import { UserContext } from "../context/user.context";
 export const useCommon = () => {
   const { user } = useContext(UserContext);

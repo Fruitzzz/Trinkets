@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Icon } from "react-materialize";
 import { Menu, MenuItem } from "@material-ui/core";
@@ -8,13 +8,15 @@ import RemoveAlert from "../technical/RemoveAlert";
 import UpdateCollectionModal from "./UpdateCollectionModal";
 import { useCommon } from "../../hooks/common.hook";
 import { useTranslation } from "react-i18next";
+import { useMessage } from "../../hooks/message.hook";
 const CollectionCard = ({ collection, setCollections, readOnly }) => {
   const { isOwner } = useCommon();
   const { t } = useTranslation();
+  const message = useMessage();
   const [anchorEl, setAnchorEl] = useState(null);
   const [openAlert, setOpenAlert] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
-  const { loading, request } = useHttp();
+  const { loading, request, error, clearError  } = useHttp();
   const handleClickMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -53,6 +55,10 @@ const CollectionCard = ({ collection, setCollections, readOnly }) => {
       setOpenUpdate(false);
     } catch {}
   };
+  useEffect(() => {
+    message(error);
+    clearError();
+  }, [error, message, clearError]);
   return (
     <div className="card col s12 m6 offset-m3 l4 hoverable">
       <div className="card-image">

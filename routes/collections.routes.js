@@ -5,6 +5,7 @@ const Item = require("../models/Item");
 const Subjects = require("../models/Subjects");
 const router = express.Router();
 const auth = require("../middleware/verify.middleware");
+const errors = require("../middleware/errors.middleware");
 const { cloudinary } = require("../utils/cloudinary");
 const { check, validationResult } = require("express-validator");
 const success = { msg: "success" };
@@ -69,14 +70,9 @@ router.post(
     check("description", "enterDescription").notEmpty(),
     check("subject", "selectSubject").notEmpty(),
   ],
+  errors,
   async (req, res) => {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({
-          msg: errors.array()[0].msg,
-        });
-      }
       req.body.optionalFields.forEach((item) => {
         if (item.name === "")
           return res.status(400).json({
@@ -120,30 +116,45 @@ router.post("/removeCollection", auth, async (req, res) => {
     res.status(500).json(fail);
   }
 });
-router.post("/updateCollection", auth, async (req, res) => {
-  const { id, title, description, image, subject, ownerId } = req.body;
-  try {
-    const updateCollection = await Collection.findByIdAndUpdate(id, {
-      title,
-      description,
-      subject,
-    });
-    if (image) {
-      if (!isDefault(updateCollection.imageId)) {
-        cloudinary.uploader.destroy(updateCollection.imageId);
-      }
-      const uploadedResponse = await cloudinary.uploader.upload(image, {
-        upload_preset: "ml_default",
+router.post(
+  "/updateCollection",
+  auth,
+  [
+    check("title", "enterCollectionName").notEmpty(),
+    check("description", "enterDescription").notEmpty(),
+    check("subject", "selectSubject").notEmpty(),
+  ],
+  errors,
+  async (req, res) => {
+    const { id, title, description, image, subject, ownerId } = req.body;
+    try {
+      const clone = await Collection.findOne({ title });
+      if (clone && !clone._id.equals(id))
+        return res.status(400).json({
+          msg: "collectionExist",
+        });
+      const updateCollection = await Collection.findByIdAndUpdate(id, {
+        title,
+        description,
+        subject,
       });
-      updateCollection.set({ imageId: uploadedResponse.public_id });
-      await updateCollection.save();
+      if (image) {
+        if (!isDefault(updateCollection.imageId)) {
+          cloudinary.uploader.destroy(updateCollection.imageId);
+        }
+        const uploadedResponse = await cloudinary.uploader.upload(image, {
+          upload_preset: "ml_default",
+        });
+        updateCollection.set({ imageId: uploadedResponse.public_id });
+        await updateCollection.save();
+      }
+      const collections = await Collection.find({ ownerId: ownerId });
+      res.status(201).json([...collections]);
+    } catch (e) {
+      res.status(500).json(fail);
     }
-    const collections = await Collection.find({ ownerId: ownerId });
-    res.status(201).json([...collections]);
-  } catch (e) {
-    res.status(500).json(fail);
   }
-});
+);
 const isDefault = (imageId) => {
   return imageId === "r8tpac1kmsgzqndept2i";
 };

@@ -34,7 +34,9 @@ export const useItem = () => {
     fields[index].value = value;
     setNewItem({ ...newItem, optionalFields: fields });
   };
-
+  const clearItem = () => {
+    setNewItem({...newItem, title: "", tags:[]});
+  }
   return {
     newItem,
     editNewItem,
@@ -44,5 +46,6 @@ export const useItem = () => {
     items,
     setItems,
     setFields,
+    clearItem
   };
 };

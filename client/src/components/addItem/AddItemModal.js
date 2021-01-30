@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import DialogContent from '@material-ui/core/DialogContent';
 const AddItemModal = () => {
   const { request, loading, error, clearError } = useHttp();
-  const { setFields, newItem, setItems} = useContext(ItemContext);
+  const { setFields, newItem, setItems, clearItem} = useContext(ItemContext);
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
   const message = useMessage();
@@ -21,6 +21,7 @@ const AddItemModal = () => {
     try {
      const items = await request("/api/items/addNewItem", "POST", { ...newItem });
      setItems(items);
+     clearItem();
      setOpen(false);
     } catch (e) {}
   };
@@ -30,6 +31,7 @@ const AddItemModal = () => {
   };
 
   const handleClose = () => {
+    clearItem();
     setOpen(false);
   };
   useEffect(() => {

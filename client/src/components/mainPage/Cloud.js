@@ -9,7 +9,7 @@ const Cloud = () => {
   const fetchTags = useCallback(async () => {
     try {
       const fetched = await request("/api/items/tags");
-      setTags(fetched);
+      setTags(fetched.slice(0, 15));
     }
     catch(e) {}
   }, [request])

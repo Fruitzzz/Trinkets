@@ -87,7 +87,7 @@ const UpdateCollectionModal = ({
               label={t("description")}
             />
           </div>
-          <div className="col s12 m7 offset-m1">
+          <div className="col s12 m7 offset-m1 right">
             <div className="col s12">
               <SubjectsPicker
                 value={update.subject}

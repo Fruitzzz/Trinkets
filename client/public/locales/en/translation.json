@@ -80,5 +80,9 @@
     "enterSubjectName": "Enter a subject name",
     "searchEmpty": "Nothing to search",
     "enterComment": "Enter a comment text",
-    "needAuth": "You need to log in"
+    "needAuth": "You need to log in",
+    "signInGoogle": "Sign In with Google",
+    "sort": "Sort",
+    "sortByName": "Sort by name",
+    "sortByDate": "Sort by date"
 }

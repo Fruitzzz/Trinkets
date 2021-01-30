@@ -8,9 +8,9 @@ export const useUser = () => {
     isAdmin: null,
     isAuthenticated: null
   });
-  const signIn = useCallback((token, id, name, isAdmin) => {
-    setUser({ token, id, name, isAdmin, isAuthenticated: !!token });
-    localStorage.setItem(storageName, JSON.stringify({ token, id, name, isAdmin }));
+  const signIn = useCallback((user) => {
+    setUser({ ...user, isAuthenticated: !!user.token });
+    localStorage.setItem(storageName, JSON.stringify({ ...user}));
   }, []);
   const logout = useCallback(() => {
     setUser({
@@ -24,7 +24,7 @@ export const useUser = () => {
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem(storageName));
     if (data && data.token) {
-      signIn(data.token, data.id, data.name, data.isAdmin);
+      signIn(data);
     }
   }, [signIn]);
   return { signIn, logout, user };

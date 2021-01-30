@@ -1,9 +1,10 @@
 const express = require("express");
 const User = require("../models/User");
 const Collection = require("../models/Collection");
-const { check, validationResult } = require("express-validator");
+const { check} = require("express-validator");
 const Subject = require("../models/Subjects");
 const Item = require("../models/Item");
+const errors = require("../middleware/errors.middleware");
 const { cloudinary } = require("../utils/cloudinary");
 const auth = require("../middleware/verify.middleware");
 const router = express.Router();
@@ -58,15 +59,9 @@ router.post("/swap", auth, async (req, res) => {
 router.post(
   "/addSubject",
   auth,
-  [check("name", "enterSubjectName").notEmpty()],
+  [check("name", "enterSubjectName").notEmpty()], errors,
   async (req, res) => {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({
-          msg: errors.array()[0].msg,
-        });
-      }
       const newSubject = new Subject({ name: req.body.name });
       newSubject.save();
       const subjects = await Subject.find();

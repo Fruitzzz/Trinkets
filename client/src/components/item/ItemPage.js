@@ -3,6 +3,7 @@ import { useHistory, useParams, Link } from "react-router-dom";
 import { SocketContext } from "../../context/socket.context";
 import { useCommon } from "../../hooks/common.hook";
 import { UserContext } from "../../context/user.context";
+import { useMessage } from "../../hooks/message.hook";
 import { Chip } from "react-materialize";
 import { useHttp } from "../../hooks/http.hook";
 import { useTranslation } from "react-i18next";
@@ -15,12 +16,13 @@ import EditFAB from "../technical/EditFAB";
 import UpdateItemModal from "./ItemUpdateModal";
 const ItemPage = () => {
   const { isOwner } = useCommon();
-  const socket = useContext(SocketContext);
   const { user } = useContext(UserContext);
-  const { request, loading } = useHttp();
+  const { request, loading, error, clearError } = useHttp();
+  const { t } = useTranslation();
+  const message = useMessage();
+  const socket = useContext(SocketContext);
   const history = useHistory();
   const params = useParams();
-  const { t } = useTranslation();
   const [item, setItem] = useState(null);
   const [openUpdate, setOpenUpdate] = useState(false);
   const fetchItem = useCallback(async () => {
@@ -46,6 +48,10 @@ const ItemPage = () => {
   useEffect(() => {
     fetchItem();
   }, [fetchItem]);
+  useEffect(() => {
+    message(error);
+    clearError();
+  }, [error, message, clearError]);
   useEffect(() => {
     socket.on("invalidItem", () => {
       history.push("/notFound");

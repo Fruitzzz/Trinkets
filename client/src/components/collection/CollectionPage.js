@@ -10,11 +10,13 @@ import CollapsibleMarkdown from "../technical/CollapsibleMarkdown";
 import EditFAB from "../technical/EditFAB";
 import UpdateCollectionModal from "../collection/UpdateCollectionModal";
 import { useCommon } from "../../hooks/common.hook";
+import {useMessage} from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 const CollectionPage = () => {
   const { isOwner } = useCommon();
-  const { request, loading } = useHttp();
+  const { request, loading, error, clearError } = useHttp();
   const history = useHistory();
+  const message = useMessage();
   const { t } = useTranslation();
   const params = useParams();
   const [collection, setCollection] = useState(null);
@@ -27,6 +29,7 @@ const CollectionPage = () => {
     setTags,
     setItems,
     setFields,
+    clearItem
   } = useItem();
   const [openUpdate, setOpenUpdate] = useState(false);
   const fetchCollection = useCallback(async () => {
@@ -38,7 +41,10 @@ const CollectionPage = () => {
       history.push("/notFound");
     }
   }, [request, params.id, history, setItems]);
-
+  useEffect(() => {
+    message(error);
+    clearError();
+  }, [error, message, clearError]);
   useEffect(() => {
     fetchCollection();
   }, [fetchCollection]);
@@ -87,6 +93,7 @@ const CollectionPage = () => {
         setTags,
         setItems,
         setFields,
+        clearItem
       }}
     >
       <div className="row content">

@@ -1,5 +1,5 @@
 import { React, Suspense} from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 import { useUser } from "./hooks/user.hook";
 import { UserContext } from "./context/user.context";
 import { useRoutes } from "./Routes";

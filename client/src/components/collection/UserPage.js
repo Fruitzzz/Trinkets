@@ -60,7 +60,7 @@ const UserPage = () => {
               className="center-align grey-text text-lighten-1"
               style={{ marginTop: "250px" }}
             >
-             {t("nothing")}
+              {t("nothing")}
             </h4>
           </div>
         )}

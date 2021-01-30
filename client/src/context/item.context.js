@@ -9,4 +9,5 @@ export const ItemContext = createContext({
   changeFields: () => {},
   removeTag: () => {},
   setTags: () => {},
+  clearItem: () => {}
 });

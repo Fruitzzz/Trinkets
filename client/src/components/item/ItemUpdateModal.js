@@ -1,5 +1,6 @@
-import { React, useState } from "react";
+import { React, useState, useCallback, useEffect } from "react";
 import { Chip, Icon, TextInput } from "react-materialize";
+import {useHttp} from "../../hooks/http.hook";
 import {
   Dialog,
   AppBar,
@@ -11,21 +12,34 @@ import {
 import { useTranslation } from "react-i18next";
 const UpdateItemModal = ({ item, open, setOpen, updateHandler, loading }) => {
   const { t } = useTranslation();
+  const {request} = useHttp();
+  const [autoCompleteData, setData] = useState({});
   const [update, setUpdate] = useState({
     id: item._id,
     title: item.title,
     tags: item.tags,
+    optionalFields: item.optionalFields
   });
   const handleClose = () => {
     setUpdate({
       title: item.title,
       tags: item.tags,
+      optionalFields: item.optionalFields
     });
     setOpen(false);
   };
+  const fetchTags = useCallback(async () => {
+    const fetched = await request("/api/items/tags");
+    const data = {};
+    fetched.forEach(item => {data[item.tag] = null});
+    setData(data);
+  }, [request])
   const changeHandler = (event) => {
     setUpdate({ ...update, [event.target.name]: event.target.value });
   };
+  useEffect(() => {
+    fetchTags();
+  }, [fetchTags])
   return (
     <Dialog fullScreen open={open} onClose={handleClose}>
       <AppBar>
@@ -70,11 +84,7 @@ const UpdateItemModal = ({ item, open, setOpen, updateHandler, loading }) => {
                 placeholder: t("enterTag"),
                 secondaryPlaceholder: t("enterAnotherTag"),
                 autocompleteOptions: {
-                  data: {
-                    Apple: null,
-                    Google: null,
-                    Microsoft: null,
-                  },
+                  data: autoCompleteData,
                   minLength: 1,
                   onAutocomplete: function noRefCheck() {},
                 },

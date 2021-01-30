@@ -2,9 +2,6 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 const User = require("../models/User");
 const tokenVerify = async (req, res, next) => {
-  if (req.method === "OPTIONS") {
-    return next();
-  }
   try {
     const token = req.headers.authorization;
     const decoded = jwt.verify(token, config.get("jwtSecret"));

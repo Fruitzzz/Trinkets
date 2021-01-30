@@ -23,6 +23,7 @@ const UserTools = ({ user, setUsers }) => {
         id: user._id,
       });
       setUsers(fetched);
+      setOpen(false);
     } catch (e) {}
   };
   const swapRoleHandler = async () => {

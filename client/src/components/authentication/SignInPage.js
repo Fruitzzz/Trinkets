@@ -1,13 +1,14 @@
 import { React, useState, useEffect, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useHttp } from "../../hooks/http.hook";
-import {Icon} from "react-materialize"
+import { Icon } from "react-materialize";
 import { useMessage } from "../../hooks/message.hook";
-import {UserContext} from "../../context/user.context";
+import { UserContext } from "../../context/user.context";
 import { Link as FlatButton } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
+import SocialNetworks from "./SocialNetworks";
 const SignInPage = () => {
-  const user = useContext(UserContext)
+  const { signIn } = useContext(UserContext);
   const message = useMessage();
   const { loading, error, request, clearError } = useHttp();
   const { t } = useTranslation();
@@ -25,15 +26,17 @@ const SignInPage = () => {
   };
   const signInHandler = async () => {
     try {
-      const data = await request("/api/auth/signIn", "POST", { ...form });
-      user.signIn(data.token, data.userId, data.userName, data.isAdmin)
+      const user = await request("/api/auth/signIn", "POST", { ...form });
+      signIn(user);
       history.push("/");
     } catch (e) {}
   };
   return (
     <div className="row auth-form">
+      <div className="col s12 m6 offset-m3">
       <h2>{t("signIn")}</h2>
-      <div className="input-field col s12">
+      </div>
+      <div className="input-field col s12 m6 offset-m3">
         <input
           id="sign-in-name"
           type="text"
@@ -43,7 +46,7 @@ const SignInPage = () => {
         />
         <label htmlFor="sign-in-name">{t("name")}</label>
       </div>
-      <div className="input-field col s12">
+      <div className="input-field col s12 m6 offset-m3">
         <input
           id="sign-in-password"
           type="password"
@@ -53,7 +56,7 @@ const SignInPage = () => {
         />
         <label htmlFor="sign-in-password">{t("password")}</label>
       </div>
-      <div className="col s12">
+      <div className="col s12 m6 offset-m3">
         <FlatButton
           className="btn-flat right flat-button"
           disabled={loading}
@@ -62,10 +65,9 @@ const SignInPage = () => {
           <Icon className="right">send</Icon>
           {t("signIn")}
         </FlatButton>
-        <Link to="/signUp">
-         {t("offerToSignUp")}
-        </Link>
+        <Link to="/signUp">{t("offerToSignUp")}</Link>
       </div>
+      <SocialNetworks />
     </div>
   );
 };
