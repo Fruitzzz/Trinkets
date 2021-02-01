@@ -1,6 +1,8 @@
 import { React, useContext } from "react";
-import { TextInput, DatePicker } from "react-materialize";
+import { TextInput } from "react-materialize";
 import { ItemContext } from "../../context/item.context";
+import DateFnsUtils from "@date-io/date-fns";
+import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 const OptionalField = ({ item, index }) => {
   const { changeFields, newItem } = useContext(ItemContext);
   const checkHandler = (event) => {
@@ -58,33 +60,40 @@ const OptionalField = ({ item, index }) => {
     }
     case "date": {
       return (
-        <div className="input-field col s12 m6 offset-m3" style={{padding: 0}}>
-          <DatePicker
-            value={newItem.optionalFields[index].value}
-            onChange={dateHandler}
-            id={`date-${index}`}
-            s={12}
-            label={item.name}
-            options={{
-              setDefaultDate: true,
-              onSelect: dateHandler,
-            }}
-          />
+        <div
+          className="input-field col s12 m6 offset-m3"
+          style={{ padding: 0 }}
+        >
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <DatePicker
+              className="col s12"
+              variant="dialog"
+              format="dd/MM/yyyy"
+              margin="normal"
+              id={`date-${index}`}
+              label={item.name}
+              value={newItem.optionalFields[index].value}
+              onChange={dateHandler}
+            />
+          </MuiPickersUtilsProvider>
         </div>
       );
     }
     default: {
       return (
-        <div className="input-field col s12 m6 offset-m3" style={{padding: 0}}>
-        <TextInput
-          s={12}
-          value={newItem.optionalFields[index].value}
-          className="custom-input"
-          id={`title-${index}`}
-          onChange={changeHandler}
-          data-length={25}
-          label={item.name}
-        />
+        <div
+          className="input-field col s12 m6 offset-m3"
+          style={{ padding: 0 }}
+        >
+          <TextInput
+            s={12}
+            value={newItem.optionalFields[index].value}
+            className="custom-input"
+            id={`title-${index}`}
+            onChange={changeHandler}
+            data-length={25}
+            label={item.name}
+          />
         </div>
       );
     }

@@ -22,7 +22,7 @@ export const useCollection = () => {
       ...collection,
       optionalFields: [
         ...collection.optionalFields,
-        { type: event.target.name, name: "", value: "" },
+        { type: event.target.name, name: "", value: event.target.name === "date"? Date.now() : ""},
       ],
     });
   };

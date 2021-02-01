@@ -25,11 +25,11 @@ const Dropzone = ({setImage}) => {
       <div {...getRootProps()} className="dropzone valign-wrapper">
         <input className="dropzone-input" {...getInputProps()} />
           {isDragActive ? (
-            <h6 className="dropzone-content">
+            <h6 className="dropzone-content center-align">
               {t("drop-accept")}
             </h6>
           ) : (
-            <h6 className="dropzone-content">
+            <h6 className="dropzone-content center-align">
               {t("drop-drag")}
             </h6>
           )}

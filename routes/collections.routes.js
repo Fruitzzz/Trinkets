@@ -58,7 +58,6 @@ router.get("/biggestCollections", async (req, res) => {
     });
     res.status(201).json([...collections]);
   } catch (e) {
-    console.log(e.message);
     res.status(500).json(fail);
   }
 });

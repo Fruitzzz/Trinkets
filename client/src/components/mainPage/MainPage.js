@@ -14,7 +14,9 @@ const MainPage = () => {
     try {
       const fetched = await request("/api/collections/biggestCollections");
       setCollections(fetched);
-    } catch (e) {}
+    } catch (e) {
+      setCollections([]);
+    }
   }, [request]);
   const fetchItems = useCallback(async () => {
     try {

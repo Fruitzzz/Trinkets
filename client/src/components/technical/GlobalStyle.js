@@ -14,6 +14,7 @@ const getContentBackground = style("mode", {
   dark: "#141414",
 });
 const getBorderColor = style("mode", {
+  light: "#9e9e9e",
   dark: "#9e9e9e",
 });
 const GlobalStyle = createGlobalStyle`
@@ -43,7 +44,7 @@ body {
  svg.MuiSelect-icon,
  .MuiTypography-h6,
  .dropzone-content,
- .datepicker-day-button {
+ button.MuiPickersDay-day {
   color: ${getForeground};
 }
 
@@ -61,13 +62,14 @@ nav .brand-logo,
 .nav-link,
 .dropdown-content li>.nav-link,
 .material-icons,
-.sidenav li>a>i.material-icons {
+.sidenav li>a>i.material-icons,
+.character-counter {
   color: ${getForeground};
 }
 .input-field input[type=search] ~ .material-icons {
   color: ${getForeground} !important;
 }
-div.MuiInputBase-input, div.MuiInput-underline:before {
+div.MuiInputBase-input, input.MuiInputBase-input, div.MuiInput-underline:before{
   color: ${getForeground};
   border-bottom: 1px solid ${getBorderColor};
 }
